@@ -16,7 +16,7 @@ public class PerfilRiscoController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet("{clienteId}")]
+    [HttpGet("perfil-risco/{clienteId}")]
     public async Task<IActionResult> GetPerfilRisco(int clienteId)
     {
         try

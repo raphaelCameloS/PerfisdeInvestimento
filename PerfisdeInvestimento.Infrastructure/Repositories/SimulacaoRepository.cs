@@ -54,4 +54,30 @@ public class SimulacaoRepository : ISimulacaoRepository
             })
             .ToListAsync<object>();
     }
+    public async Task<List<SimulacaoPorProdutoDia>> GetSimulacoesAgrupadasPorProdutoDiaAsync()
+    {
+        var resultado = await _context.Simulacoes
+            .GroupBy(s => new
+            {
+                Produto = s.Produto,
+                Data = s.DataSimulacao.Date
+            })
+            .Select(g => new
+            {
+                Produto = g.Key.Produto,
+                Data = g.Key.Data,
+                QuantidadeSimulacoes = g.Count(),
+                MediaValorFinal = g.Average(s => (double)s.ValorFinal) // ← Converta para double
+            })
+            .ToListAsync();
+
+        return resultado.Select(r => new SimulacaoPorProdutoDia
+        {
+            Produto = r.Produto,
+            Data = r.Data,
+            QuantidadeSimulacoes = r.QuantidadeSimulacoes,
+            MediaValorFinal = (decimal)r.MediaValorFinal // ← Converta de volta para decimal
+        }).ToList();
+    }
+
 }

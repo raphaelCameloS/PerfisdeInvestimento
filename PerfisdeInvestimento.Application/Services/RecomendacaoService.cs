@@ -42,7 +42,7 @@ public class RecomendacaoService : IRecomendacaoService
             Nome = p.Nome,
             Tipo = p.Tipo,
             Rentabilidade = p.Rentabilidade,
-            Risco = p.Risco
+            Risco = p.Risco,
         }).ToList();
     }
 
