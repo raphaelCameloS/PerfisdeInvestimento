@@ -1,0 +1,438 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.API\\PerfisdeInvestimento.API.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PefisdeInvestimento.ServiceDefaults\\PefisdeInvestimento.ServiceDefaults.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PefisdeInvestimento.ServiceDefaults\\PefisdeInvestimento.ServiceDefaults.csproj",
+        "projectName": "PefisdeInvestimento.ServiceDefaults",
+        "projectPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PefisdeInvestimento.ServiceDefaults\\PefisdeInvestimento.ServiceDefaults.csproj",
+        "packagesPath": "C:\\Users\\Raphael\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PefisdeInvestimento.ServiceDefaults\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Raphael\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.Extensions.Http.Resilience": {
+              "target": "Package",
+              "version": "[9.4.0, )"
+            },
+            "Microsoft.Extensions.ServiceDiscovery": {
+              "target": "Package",
+              "version": "[9.3.1, )"
+            },
+            "OpenTelemetry.Exporter.OpenTelemetryProtocol": {
+              "target": "Package",
+              "version": "[1.9.0, )"
+            },
+            "OpenTelemetry.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[1.9.0, )"
+            },
+            "OpenTelemetry.Instrumentation.AspNetCore": {
+              "target": "Package",
+              "version": "[1.9.0, )"
+            },
+            "OpenTelemetry.Instrumentation.Http": {
+              "target": "Package",
+              "version": "[1.9.0, )"
+            },
+            "OpenTelemetry.Instrumentation.Runtime": {
+              "target": "Package",
+              "version": "[1.9.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.API\\PerfisdeInvestimento.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.API\\PerfisdeInvestimento.API.csproj",
+        "projectName": "PerfisdeInvestimento.API",
+        "projectPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.API\\PerfisdeInvestimento.API.csproj",
+        "packagesPath": "C:\\Users\\Raphael\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.API\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Raphael\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PefisdeInvestimento.ServiceDefaults\\PefisdeInvestimento.ServiceDefaults.csproj": {
+                "projectPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PefisdeInvestimento.ServiceDefaults\\PefisdeInvestimento.ServiceDefaults.csproj"
+              },
+              "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Application\\PerfisdeInvestimento.Application.csproj": {
+                "projectPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Application\\PerfisdeInvestimento.Application.csproj"
+              },
+              "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Infrastructure\\PerfisdeInvestimento.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Infrastructure\\PerfisdeInvestimento.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.22.1, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Application\\PerfisdeInvestimento.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Application\\PerfisdeInvestimento.Application.csproj",
+        "projectName": "PerfisdeInvestimento.Application",
+        "projectPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Application\\PerfisdeInvestimento.Application.csproj",
+        "packagesPath": "C:\\Users\\Raphael\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Raphael\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Domain\\PerfisdeInvestimento.Domain.csproj": {
+                "projectPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Domain\\PerfisdeInvestimento.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Domain\\PerfisdeInvestimento.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Domain\\PerfisdeInvestimento.Domain.csproj",
+        "projectName": "PerfisdeInvestimento.Domain",
+        "projectPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Domain\\PerfisdeInvestimento.Domain.csproj",
+        "packagesPath": "C:\\Users\\Raphael\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Raphael\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Infrastructure\\PerfisdeInvestimento.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Infrastructure\\PerfisdeInvestimento.Infrastructure.csproj",
+        "projectName": "PerfisdeInvestimento.Infrastructure",
+        "projectPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Infrastructure\\PerfisdeInvestimento.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Raphael\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Raphael\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Application\\PerfisdeInvestimento.Application.csproj": {
+                "projectPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Application\\PerfisdeInvestimento.Application.csproj"
+              },
+              "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Domain\\PerfisdeInvestimento.Domain.csproj": {
+                "projectPath": "C:\\Users\\Raphael\\Documents\\Desafio-WebAPI\\PefisdeInvestimento\\PerfisdeInvestimento.Domain\\PerfisdeInvestimento.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

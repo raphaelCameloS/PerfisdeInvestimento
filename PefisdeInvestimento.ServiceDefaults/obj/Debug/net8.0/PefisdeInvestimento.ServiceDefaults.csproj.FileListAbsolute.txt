@@ -1,0 +1,12 @@
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PefisdeInvestimento.ServiceDefaults\bin\Debug\net8.0\PefisdeInvestimento.ServiceDefaults.deps.json
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PefisdeInvestimento.ServiceDefaults\bin\Debug\net8.0\PefisdeInvestimento.ServiceDefaults.dll
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PefisdeInvestimento.ServiceDefaults\bin\Debug\net8.0\PefisdeInvestimento.ServiceDefaults.pdb
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PefisdeInvestimento.ServiceDefaults\obj\Debug\net8.0\PefisdeInvestimento.ServiceDefaults.csproj.AssemblyReference.cache
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PefisdeInvestimento.ServiceDefaults\obj\Debug\net8.0\PefisdeInvestimento.ServiceDefaults.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PefisdeInvestimento.ServiceDefaults\obj\Debug\net8.0\PefisdeInvestimento.ServiceDefaults.AssemblyInfoInputs.cache
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PefisdeInvestimento.ServiceDefaults\obj\Debug\net8.0\PefisdeInvestimento.ServiceDefaults.AssemblyInfo.cs
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PefisdeInvestimento.ServiceDefaults\obj\Debug\net8.0\PefisdeInvestimento.ServiceDefaults.csproj.CoreCompileInputs.cache
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PefisdeInvestimento.ServiceDefaults\obj\Debug\net8.0\PefisdeInvestimento.ServiceDefaults.dll
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PefisdeInvestimento.ServiceDefaults\obj\Debug\net8.0\refint\PefisdeInvestimento.ServiceDefaults.dll
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PefisdeInvestimento.ServiceDefaults\obj\Debug\net8.0\PefisdeInvestimento.ServiceDefaults.pdb
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PefisdeInvestimento.ServiceDefaults\obj\Debug\net8.0\ref\PefisdeInvestimento.ServiceDefaults.dll

@@ -1,0 +1,11 @@
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Domain\bin\Debug\net8.0\PerfisdeInvestimento.Domain.deps.json
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Domain\bin\Debug\net8.0\PerfisdeInvestimento.Domain.dll
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Domain\bin\Debug\net8.0\PerfisdeInvestimento.Domain.pdb
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Domain\obj\Debug\net8.0\PerfisdeInvestimento.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Domain\obj\Debug\net8.0\PerfisdeInvestimento.Domain.AssemblyInfoInputs.cache
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Domain\obj\Debug\net8.0\PerfisdeInvestimento.Domain.AssemblyInfo.cs
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Domain\obj\Debug\net8.0\PerfisdeInvestimento.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Domain\obj\Debug\net8.0\PerfisdeInvestimento.Domain.dll
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Domain\obj\Debug\net8.0\refint\PerfisdeInvestimento.Domain.dll
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Domain\obj\Debug\net8.0\PerfisdeInvestimento.Domain.pdb
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Domain\obj\Debug\net8.0\ref\PerfisdeInvestimento.Domain.dll

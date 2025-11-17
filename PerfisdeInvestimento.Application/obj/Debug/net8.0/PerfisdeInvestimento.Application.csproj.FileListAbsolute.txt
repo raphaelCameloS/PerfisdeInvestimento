@@ -1,0 +1,15 @@
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Application\bin\Debug\net8.0\PerfisdeInvestimento.Application.deps.json
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Application\bin\Debug\net8.0\PerfisdeInvestimento.Application.dll
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Application\bin\Debug\net8.0\PerfisdeInvestimento.Application.pdb
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Application\bin\Debug\net8.0\PerfisdeInvestimento.Domain.dll
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Application\bin\Debug\net8.0\PerfisdeInvestimento.Domain.pdb
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Application\obj\Debug\net8.0\PerfisdeInvestimento.Application.csproj.AssemblyReference.cache
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Application\obj\Debug\net8.0\PerfisdeInvestimento.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Application\obj\Debug\net8.0\PerfisdeInvestimento.Application.AssemblyInfoInputs.cache
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Application\obj\Debug\net8.0\PerfisdeInvestimento.Application.AssemblyInfo.cs
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Application\obj\Debug\net8.0\PerfisdeInvestimento.Application.csproj.CoreCompileInputs.cache
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Application\obj\Debug\net8.0\Perfisde.2A89F8DF.Up2Date
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Application\obj\Debug\net8.0\PerfisdeInvestimento.Application.dll
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Application\obj\Debug\net8.0\refint\PerfisdeInvestimento.Application.dll
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Application\obj\Debug\net8.0\PerfisdeInvestimento.Application.pdb
+C:\Users\Raphael\Documents\Desafio-WebAPI\PefisdeInvestimento\PerfisdeInvestimento.Application\obj\Debug\net8.0\ref\PerfisdeInvestimento.Application.dll
