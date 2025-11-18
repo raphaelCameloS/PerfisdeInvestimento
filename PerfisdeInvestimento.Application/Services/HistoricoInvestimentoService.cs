@@ -1,5 +1,6 @@
 ﻿using PerfisdeInvestimento.Application.DTOs;
 using PerfisdeInvestimento.Application.Interfaces.IServices;
+using PerfisdeInvestimento.Domain.Exceptions;
 using PerfisdeInvestimento.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,12 @@ namespace PerfisdeInvestimento.Application.Services
         public async Task<List<HistoricoInvestimentosResponse>> GetHistoricoInvestimentos(int clienteId)
         {
             var historicos = await _historicoRepository.GetByClienteIdAsync(clienteId);
+
+
+            if (!historicos.Any())
+            {
+                throw new NotFoundException($"Cliente {clienteId} não possui histórico de investimentos.");
+            }
 
             return historicos.Select(h => new HistoricoInvestimentosResponse
             {

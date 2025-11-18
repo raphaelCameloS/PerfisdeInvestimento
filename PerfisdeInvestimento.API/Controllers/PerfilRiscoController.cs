@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PerfisdeInvestimento.Application.Interfaces.IServices;
+using System.Globalization;
 
 namespace PerfisdeInvestimento.API.Controllers;
 
@@ -37,7 +38,12 @@ public class PerfilRiscoController : ControllerBase
     {
         try
         {
-            var produtos = await _recomendacaoService.GetProdutosRecomendados(perfil);
+            var perfilNormalizado = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(perfil.ToLower());
+
+            _logger.LogInformation("Buscando produtos para perfil: '{Perfil}' -> '{PerfilNormalizado}'",
+                perfil, perfilNormalizado);
+
+            var produtos = await _recomendacaoService.GetProdutosRecomendados(perfilNormalizado);
             return Ok(produtos);
         }
         catch (Exception ex)

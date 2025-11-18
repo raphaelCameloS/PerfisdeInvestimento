@@ -1,8 +1,10 @@
 ﻿using PerfisdeInvestimento.Application.DTOs;
 using PerfisdeInvestimento.Application.Interfaces.IRepositories;
-using PerfisdeInvestimento.Domain.Entities;
-using PerfisdeInvestimento.Infrastructure.Repositories;
 using PerfisdeInvestimento.Application.Interfaces.IServices;
+using PerfisdeInvestimento.Domain.Entities;
+using PerfisdeInvestimento.Domain.Exceptions;
+using PerfisdeInvestimento.Infrastructure.Repositories;
+using System.Globalization;
 
 namespace PerfisdeInvestimento.Application.Services;
 
@@ -19,22 +21,45 @@ public class RecomendacaoService : IRecomendacaoService
 
     public async Task<PerfilRiscoResponse> CalcularPerfilRisco(int clienteId)
     {
-        var historico = await _historicoRepository.GetByClienteIdAsync(clienteId);
-        var pontuacao = CalcularPontuacaoPerfil(historico);
-        var perfil = DeterminarPerfil(pontuacao);
-
-        return new PerfilRiscoResponse
+        try
         {
-            ClienteId = clienteId,
-            Perfil = perfil,
-            Pontuacao = pontuacao,
-            Descricao = ObterDescricaoPerfil(perfil)
-        };
+            var historico = await _historicoRepository.GetByClienteIdAsync(clienteId);
+            if (!historico.Any())
+            {
+                throw new NotFoundException($"Cliente {clienteId} não possui histórico de investimentos necessários para calcular o perfil de risco."); 
+            }           
+            var pontuacao = CalcularPontuacaoPerfil(historico);
+            var perfil = DeterminarPerfil(pontuacao);
+
+            return new PerfilRiscoResponse
+            {
+                ClienteId = clienteId,
+                Perfil = perfil,
+                Pontuacao = pontuacao,
+                Descricao = ObterDescricaoPerfil(perfil)
+            };
+        }
+        catch (Exception ex) when (ex is not NotFoundException)
+        {
+            throw new BusinessException($"Erro ao calcular perfil do cliente {clienteId}: {ex.Message}");
+        }
     }
 
     public async Task<List<ProdutoRecomendadoResponse>> GetProdutosRecomendados(string perfil)
     {
+        var perfilNormalizado = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(perfil.ToLower());
+
         var produtos = await _produtoRepository.GetProdutosPorPerfilAsync(perfil);
+
+        if (!produtos.Any())
+        {
+            //throw new NotFoundException($"Nenhum produto encontrado para o perfil '{perfil}'. " +
+            //                          $"Perfis disponíveis: Conservador, Moderado e Agressivo.");
+            throw new NotFoundException(
+            $"Nenhum produto encontrado para perfil '{perfil}' (normalizado: '{perfilNormalizado}'). " +
+            $"Perfis disponíveis no banco: {string.Join(", ", await GetPerfisDisponiveis())}"
+        );
+        }
 
         return produtos.Select(p => new ProdutoRecomendadoResponse
         {
@@ -44,6 +69,12 @@ public class RecomendacaoService : IRecomendacaoService
             Rentabilidade = p.Rentabilidade,
             Risco = p.Risco,
         }).ToList();
+
+    }
+    private async Task<List<string>> GetPerfisDisponiveis()
+    {
+        var todosProdutos = await _produtoRepository.GetAllAsync();
+        return todosProdutos.Select(p => p.PerfilRecomendado).Distinct().ToList();
     }
 
     private int CalcularPontuacaoPerfil(List<HistoricoInvestimento> historico)

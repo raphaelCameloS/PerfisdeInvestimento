@@ -29,8 +29,9 @@
 //app.Run();
 
 using Microsoft.EntityFrameworkCore;
-using PerfisdeInvestimento.Application.Interfaces.IServices;
+using PerfisdeInvestimento.API.Middleware;
 using PerfisdeInvestimento.Application.Interfaces.IRepositories;
+using PerfisdeInvestimento.Application.Interfaces.IServices;
 using PerfisdeInvestimento.Application.Services;
 using PerfisdeInvestimento.Infrastructure.Data;
 using PerfisdeInvestimento.Infrastructure.Repositories;
@@ -70,5 +71,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.Run();
