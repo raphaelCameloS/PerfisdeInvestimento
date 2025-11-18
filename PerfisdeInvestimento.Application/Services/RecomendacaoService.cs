@@ -24,10 +24,10 @@ public class RecomendacaoService : IRecomendacaoService
         try
         {
             var historico = await _historicoRepository.GetByClienteIdAsync(clienteId);
-            if (!historico.Any())
+            if (historico == null || !historico.Any())
             {
-                throw new NotFoundException($"Cliente {clienteId} não possui histórico de investimentos necessários para calcular o perfil de risco."); 
-            }           
+                throw new NotFoundException($"Cliente {clienteId} não possui histórico de investimentos necessários para calcular o perfil de risco.");
+            }
             var pontuacao = CalcularPontuacaoPerfil(historico);
             var perfil = DeterminarPerfil(pontuacao);
 
@@ -45,20 +45,43 @@ public class RecomendacaoService : IRecomendacaoService
         }
     }
 
+    //public async Task<List<ProdutoRecomendadoResponse>> GetProdutosRecomendados(string perfil)
+    //{
+    //    var perfilNormalizado = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(perfil.ToLower());
+
+    //    var produtos = await _produtoRepository.GetProdutosPorPerfilAsync(perfil);
+
+    //    if (produtos == null || !produtos.Any())
+    //    {
+    //        throw new NotFoundException(
+    //            $"Nenhum produto encontrado para perfil '{perfil}' (normalizado: '{perfilNormalizado}'). " +
+    //            $"Perfis disponíveis no banco: {string.Join(", ", await GetPerfisDisponiveis())}"
+    //        );
+    //    }
+
+    //    return produtos.Select(p => new ProdutoRecomendadoResponse
+    //    {
+    //        Id = p.Id,
+    //        Nome = p.Nome,
+    //        Tipo = p.Tipo,
+    //        Rentabilidade = p.Rentabilidade,
+    //        Risco = p.Risco,
+    //    }).ToList();
+
+    //}
     public async Task<List<ProdutoRecomendadoResponse>> GetProdutosRecomendados(string perfil)
     {
         var perfilNormalizado = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(perfil.ToLower());
 
-        var produtos = await _produtoRepository.GetProdutosPorPerfilAsync(perfil);
+        // CORREÇÃO: Usar perfilNormalizado em vez de perfil
+        var produtos = await _produtoRepository.GetProdutosPorPerfilAsync(perfilNormalizado);
 
-        if (!produtos.Any())
+        if (produtos == null || !produtos.Any())
         {
-            //throw new NotFoundException($"Nenhum produto encontrado para o perfil '{perfil}'. " +
-            //                          $"Perfis disponíveis: Conservador, Moderado e Agressivo.");
             throw new NotFoundException(
-            $"Nenhum produto encontrado para perfil '{perfil}' (normalizado: '{perfilNormalizado}'). " +
-            $"Perfis disponíveis no banco: {string.Join(", ", await GetPerfisDisponiveis())}"
-        );
+                $"Nenhum produto encontrado para perfil '{perfil}' (normalizado: '{perfilNormalizado}'). " +
+                $"Perfis disponíveis no banco: {string.Join(", ", await GetPerfisDisponiveis())}"
+            );
         }
 
         return produtos.Select(p => new ProdutoRecomendadoResponse
@@ -69,12 +92,21 @@ public class RecomendacaoService : IRecomendacaoService
             Rentabilidade = p.Rentabilidade,
             Risco = p.Risco,
         }).ToList();
-
     }
-    private async Task<List<string>> GetPerfisDisponiveis()
+    private async Task<List<string>>    GetPerfisDisponiveis()
     {
+        //var todosProdutos = await _produtoRepository.GetAllAsync();
+        //return todosProdutos.Select(p => p.PerfilRecomendado).Distinct().ToList();
         var todosProdutos = await _produtoRepository.GetAllAsync();
-        return todosProdutos.Select(p => p.PerfilRecomendado).Distinct().ToList();
+
+        if (todosProdutos == null || !todosProdutos.Any())
+            return new List<string> { "Nenhum perfil disponível" };
+
+        return todosProdutos
+            .Where(p => !string.IsNullOrEmpty(p.PerfilRecomendado))
+            .Select(p => p.PerfilRecomendado)
+            .Distinct()
+            .ToList();
     }
 
     private int CalcularPontuacaoPerfil(List<HistoricoInvestimento> historico)

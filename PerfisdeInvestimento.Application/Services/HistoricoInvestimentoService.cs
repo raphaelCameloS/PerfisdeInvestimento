@@ -24,7 +24,11 @@ namespace PerfisdeInvestimento.Application.Services
             var historicos = await _historicoRepository.GetByClienteIdAsync(clienteId);
 
 
-            if (!historicos.Any())
+            //if (!historicos.Any())
+            //{
+            //    throw new NotFoundException($"Cliente {clienteId} não possui histórico de investimentos.");
+            //}
+            if (historicos == null || !historicos.Any())
             {
                 throw new NotFoundException($"Cliente {clienteId} não possui histórico de investimentos.");
             }
