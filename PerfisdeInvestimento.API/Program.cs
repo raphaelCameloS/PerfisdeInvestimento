@@ -67,10 +67,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+
 
 app.Run();

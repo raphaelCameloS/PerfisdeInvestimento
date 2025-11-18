@@ -23,16 +23,20 @@ public class InvestimentoController : ControllerBase
     [HttpGet("{clienteId}")]
     public async Task<ActionResult<List<HistoricoInvestimentosResponse>>> GetHistoricoInvestimentos(int clienteId)
     {
-        try
-        {
-            _logger.LogInformation("Buscando histórico de investimentos para cliente {ClienteId}", clienteId);
-            var historico = await _historyService.GetHistoricoInvestimentos(clienteId);
-            return Ok(historico);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Erro ao buscar histórico para cliente {ClienteId}", clienteId);
-            return BadRequest(new { error = ex.Message });
-        }
+        //try
+        //{
+        //    _logger.LogInformation("Buscando histórico de investimentos para cliente {ClienteId}", clienteId);
+        //    var historico = await _historyService.GetHistoricoInvestimentos(clienteId);
+        //    return Ok(historico);
+        //}
+        //catch (Exception ex)
+        //{
+        //    _logger.LogError(ex, "Erro ao buscar histórico para cliente {ClienteId}", clienteId);
+        //    return BadRequest(new { error = ex.Message });
+        //}
+        _logger.LogInformation("Buscando histórico de investimentos para cliente {ClienteId}", clienteId);
+        var historico = await _historyService.GetHistoricoInvestimentos(clienteId);
+        return Ok(historico);
+
     }
 }
