@@ -9,10 +9,10 @@ namespace PerfisdeInvestimento.Domain.Entities
     public class Telemetria
     {
         public int Id { get; set; }
-        public string Endpoint { get; set; }
+        public string Endpoint { get; set; } = string.Empty;
         public DateTime RequestTime { get; set; }
         public long ResponseTimeMs { get; set; }
         public int StatusCode { get; set; }
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
     }
 }

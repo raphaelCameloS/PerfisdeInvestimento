@@ -57,6 +57,8 @@ builder.Services.AddScoped<IHistoricoInvestimentoRepository, HistoricoInvestimen
 builder.Services.AddScoped<ISimulacaoService, SimulacaoService>();
 builder.Services.AddScoped<IRecomendacaoService, RecomendacaoService>();
 builder.Services.AddScoped<IHistoricoInvestimentoService, HistoricoInvestimentoService>();
+builder.Services.AddScoped<ITelemetriaService, TelemetriaService>();
+builder.Services.AddScoped<ITelemetriaRepository, TelemetriaRepository>();
 
 
 var app = builder.Build();
@@ -68,6 +70,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+app.UseMiddleware<TelemetriaMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
