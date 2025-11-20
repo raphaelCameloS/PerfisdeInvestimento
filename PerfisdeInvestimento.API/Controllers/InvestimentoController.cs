@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PerfisdeInvestimento.Application.DTOs;
 using PerfisdeInvestimento.Application.Interfaces.IServices;
 
@@ -20,7 +21,12 @@ public class InvestimentoController : ControllerBase
         _logger = logger;
     }
 
+    [Authorize]
     [HttpGet("{clienteId}")]
+    [ProducesResponseType(typeof(PerfilRiscoResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErroResponse), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErroResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErroResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<List<HistoricoInvestimentosResponse>>> GetHistoricoInvestimentos(int clienteId)
     {
         //try

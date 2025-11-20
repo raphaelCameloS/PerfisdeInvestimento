@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PerfisdeInvestimento.Application.DTOs;
 using PerfisdeInvestimento.Application.Interfaces.IServices;
 using System.Globalization;
 
@@ -18,19 +19,12 @@ public class PerfilRiscoController : ControllerBase
     }
 
     [HttpGet("perfil-risco/{clienteId}")]
-    public async Task<IActionResult> GetPerfilRisco(int clienteId)
+    [ProducesResponseType(typeof(PerfilRiscoResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErroResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErroResponse), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErroResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<PerfilRiscoResponse>> GetPerfilRisco(int clienteId)
     {
-        //try
-        //{
-        //    _logger.LogInformation("Calculando perfil de risco para cliente {ClienteId}", clienteId);
-        //    var perfil = await _recomendacaoService.CalcularPerfilRisco(clienteId);
-        //    return Ok(perfil);
-        //}
-        //catch (Exception ex)
-        //{
-        //    _logger.LogError(ex, "Erro ao calcular perfil para cliente {ClienteId}", clienteId);
-        //    return BadRequest(new { error = ex.Message });
-        //}
         _logger.LogInformation("Calculando perfil de risco para cliente {ClienteId}", clienteId);
         var perfil = await _recomendacaoService.CalcularPerfilRisco(clienteId);
         return Ok(perfil);
