@@ -225,8 +225,12 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 //AJUSTE CRÍTICO: Configurar SQLite para Container
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=perfisinvestimento.db"));
+
+// Configurar SQLite - AJUSTE PARA USAR PASTA DATA
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=perfisinvestimento.db"));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=Data/perfisinvestimento.db"));
 
 // Registrar os Repositórios (mantenha igual)
 builder.Services.AddScoped<ISimulacaoRepository, SimulacaoRepository>();

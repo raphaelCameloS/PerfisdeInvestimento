@@ -1,37 +1,20 @@
-# Acesse https://aka.ms/customizecontainer para saber como personalizar seu contêiner de depuração e como o Visual Studio usa este Dockerfile para criar suas imagens para uma depuração mais rápida.
-
-# Dependendo do sistema operacional dos computadores host que compilarão ou executarão os contêineres, a imagem especificada na instrução FROM pode precisar ser alterada.
-# Para obter mais informações, consulte https://aka.ms/containercompat.
-
-# Esta fase é usada durante a execução no VS no modo rápido (Padrão para a configuração de Depuração)
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-nanoserver-1809 AS base
-WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
-
-# Criar diretório para dados do SQLite
-RUN mkdir Data
-
-# Esta fase é usada para compilar o projeto de serviço
-FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-1809 AS build
-ARG BUILD_CONFIGURATION=Release
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["PerfisdeInvestimento.API/PerfisdeInvestimento.API.csproj", "PerfisdeInvestimento.API/"]
 COPY ["PerfisdeInvestimento.Application/PerfisdeInvestimento.Application.csproj", "PerfisdeInvestimento.Application/"]
 COPY ["PerfisdeInvestimento.Domain/PerfisdeInvestimento.Domain.csproj", "PerfisdeInvestimento.Domain/"]
 COPY ["PerfisdeInvestimento.Infrastructure/PerfisdeInvestimento.Infrastructure.csproj", "PerfisdeInvestimento.Infrastructure/"]
-RUN dotnet restore "./PerfisdeInvestimento.API/PerfisdeInvestimento.API.csproj"
+RUN dotnet restore "PerfisdeInvestimento.API/PerfisdeInvestimento.API.csproj"
 COPY . .
 WORKDIR "/src/PerfisdeInvestimento.API"
-RUN dotnet build "./PerfisdeInvestimento.API.csproj" -c %BUILD_CONFIGURATION% -o /app/build
+RUN dotnet build "PerfisdeInvestimento.API.csproj" -c Release -o /app/build
 
-# Esta fase é usada para publicar o projeto de serviço a ser copiado para a fase final
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./PerfisdeInvestimento.API.csproj" -c %BUILD_CONFIGURATION% -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "PerfisdeInvestimento.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-# Esta fase é usada na produção ou quando executada no VS no modo normal (padrão quando não está usando a configuração de Depuração)
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
+RUN mkdir -p Data
+EXPOSE 8080
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "PerfisdeInvestimento.API.dll"]

@@ -1,6 +1,4 @@
-﻿// Crie um middleware para registrar todas as chamadas
-using Google.Protobuf.WellKnownTypes;
-using PerfisdeInvestimento.Domain.Entities;
+﻿using PerfisdeInvestimento.Domain.Entities;
 
 public class TelemetriaMiddleware
 {
@@ -20,23 +18,30 @@ public class TelemetriaMiddleware
         await _next(context);
 
         stopwatch.Stop();
-
-        // Registra a telemetria em background
         _ = Task.Run(async () =>
         {
-            using var scope = _serviceScopeFactory.CreateScope();
-            var repository = scope.ServiceProvider.GetRequiredService<ITelemetriaRepository>();
-
-            await repository.AddAsync(new Telemetria
+            try
             {
-                Endpoint = context.Request.Path,
-                RequestTime = DateTime.UtcNow,
-                ResponseTimeMs = stopwatch.ElapsedMilliseconds,
-                StatusCode = context.Response.StatusCode,
-                UserId = context.User.Identity?.Name
-            });
+                using var scope = _serviceScopeFactory.CreateScope();
+                var repository = scope.ServiceProvider.GetRequiredService<ITelemetriaRepository>();
+
+                var userId = context.User?.Identity?.IsAuthenticated == true
+                    ? context.User.Identity.Name
+                    : "Anonymous";
+
+                await repository.AddAsync(new Telemetria
+                {
+                    Endpoint = context.Request.Path,
+                    RequestTime = DateTime.UtcNow,
+                    ResponseTimeMs = stopwatch.ElapsedMilliseconds,
+                    StatusCode = context.Response.StatusCode,
+                    UserId = userId 
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao salvar telemetria: {ex.Message}");
+            }
         });
     }
 }
-
-
