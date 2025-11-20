@@ -9,12 +9,17 @@ WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
+# Criar diretório para dados do SQLite
+RUN mkdir Data
 
 # Esta fase é usada para compilar o projeto de serviço
 FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-1809 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["PerfisdeInvestimento.API/PerfisdeInvestimento.API.csproj", "PerfisdeInvestimento.API/"]
+COPY ["PerfisdeInvestimento.Application/PerfisdeInvestimento.Application.csproj", "PerfisdeInvestimento.Application/"]
+COPY ["PerfisdeInvestimento.Domain/PerfisdeInvestimento.Domain.csproj", "PerfisdeInvestimento.Domain/"]
+COPY ["PerfisdeInvestimento.Infrastructure/PerfisdeInvestimento.Infrastructure.csproj", "PerfisdeInvestimento.Infrastructure/"]
 RUN dotnet restore "./PerfisdeInvestimento.API/PerfisdeInvestimento.API.csproj"
 COPY . .
 WORKDIR "/src/PerfisdeInvestimento.API"

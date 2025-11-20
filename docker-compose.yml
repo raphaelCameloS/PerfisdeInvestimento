@@ -1,0 +1,23 @@
+services:
+  perfis-investimento-api:
+    image: perfis-investimento-api
+    build:
+      context: .
+      dockerfile: PerfisdeInvestimento.API/Dockerfile
+    container_name: perfis-investimento-api
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Data Source=/app/perfisinvestimento.db
+      - Jwt__Key=PerfisInvestimento2025!ChaveSuperSecretaParaJWT@123
+      - Jwt__Issuer=PerfisdeInvestimentoAPI
+      - Jwt__Audience=InvestimentoClientes
+      - Jwt__ExpireHours=1
+    volumes:
+      - sqlite_data:/app
+    restart: unless-stopped
+
+volumes:
+  sqlite_data:
