@@ -1,7 +1,0 @@
-services:
-  perfis-investimento-api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "5000:8080"
-      - "5001:8081"
