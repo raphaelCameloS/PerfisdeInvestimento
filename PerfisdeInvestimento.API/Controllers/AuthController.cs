@@ -19,7 +19,7 @@ public class AuthController : ControllerBase
     {
         _configuration = configuration;
     }
-
+   
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequest request)
     {
@@ -28,14 +28,10 @@ public class AuthController : ControllerBase
         {
             return BadRequest(new { error = "Username e password são obrigatórios" });
         }
-
-        // Aqui você validaria no banco de dados
-        // Por enquanto, vamos usar um usuário fixo para teste
         if (!IsValidUser(request.PessoaUsuaria, request.Senha))
         {
             return Unauthorized(new { error = "Credenciais inválidas" });
         }
-
         //Gerar token JWT
         var token = GenerateJwtToken(request.PessoaUsuaria);
 
@@ -50,7 +46,6 @@ public class AuthController : ControllerBase
     private bool IsValidUser(string username, string password)
     {
         // USUÁRIOS FIXOS PARA TESTE
-        // Em produção, valide contra seu banco de dados
         var validUsers = new Dictionary<string, string>
         {
             { "admin", "admin123" },
@@ -68,7 +63,6 @@ public class AuthController : ControllerBase
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        // Claims (informações do usuário)
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, username),
@@ -77,7 +71,6 @@ public class AuthController : ControllerBase
             new Claim("app", "PerfisInvestimento")
         };
 
-        // Criar token
         var token = new JwtSecurityToken(
             issuer: jwtSettings["Issuer"],
             audience: jwtSettings["Audience"],
