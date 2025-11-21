@@ -1,48 +1,68 @@
-﻿using System;
+﻿using PerfisdeInvestimento.Application.DTOs;
+using PerfisdeInvestimento.Application.Interfaces.IRepositories;
+using PerfisdeInvestimento.Application.Interfaces.IServices;
+using PerfisdeInvestimento.Domain.Entities;
+using PerfisdeInvestimento.Domain.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PerfisdeInvestimento.Application.DTOs;
-using PerfisdeInvestimento.Application.Interfaces.IRepositories;
-using PerfisdeInvestimento.Application.Interfaces.IServices;
-using PerfisdeInvestimento.Domain.Entities;
 namespace PerfisdeInvestimento.Application.Services;
 
 public class SimulacaoService : ISimulacaoService
 {
     private readonly ISimulacaoRepository _simulacaoRepository;
     private readonly IProdutoRepository _produtoRepository;
+    private readonly IRecomendacaoService _recomendacaoService;
 
-    public SimulacaoService(ISimulacaoRepository simulacaoRepository, IProdutoRepository produtoRepository)
+    public SimulacaoService(ISimulacaoRepository simulacaoRepository, IProdutoRepository produtoRepository, IRecomendacaoService recomendacaoService)
     {
         _simulacaoRepository = simulacaoRepository;
         _produtoRepository = produtoRepository;
+        _recomendacaoService = recomendacaoService;
     }
 
     public async Task<SimulacaoResponse> SimularInvestimento(SimulacaoRequest request)
     {
-        // Buscar produtos que se adequam ao perfil (simulação simples)
-        var produtos = await _produtoRepository.GetAllAsync();
-        var produtoSelecionado = produtos.First(); // Lógica simples por enquanto
+        if (request.Valor <= 0)
+            throw new ValidationException("O valor do investimento deve ser maior que zero.");
 
-        // Calcular valor final
+        if (request.PrazoMeses <= 0)
+            throw new ValidationException("O prazo em meses deve ser maior que zero.");
+
+        var produtoSelecionado = await SelecionarProdutoAdequado(request);
+
+        if (produtoSelecionado == null)
+        {
+          
+            throw new NotFoundException(
+            $"Nenhum produto compatível encontrado. " +
+            $"Filtros: Tipo='{request.TipoProduto}', Valor={request.Valor}, Prazo={request.PrazoMeses} meses. " +
+            $"Produtos disponíveis: {await GetProdutosDisponiveisFormatados()}"
+
+        );
+        }
+
+        
         var valorFinal = CalcularValorFinal(request.Valor, produtoSelecionado.Rentabilidade, request.PrazoMeses);
 
-        // Criar entidade para salvar
+
+        var valorFinalArredondado = Math.Round(valorFinal, 2);
+        var rentabilidadeArredondada = Math.Round(produtoSelecionado.Rentabilidade, 2);
+
         var simulacao = new SimulacaoInvestimento
         {
             ClienteId = request.ClienteId,
             Produto = produtoSelecionado.Nome,
             ValorInvestido = request.Valor,
-            ValorFinal = valorFinal,
+            ValorFinal = valorFinalArredondado,
             PrazoMeses = request.PrazoMeses,
             DataSimulacao = DateTime.UtcNow
         };
 
         await _simulacaoRepository.AddAsync(simulacao);
 
-        // Retornar response
         return new SimulacaoResponse
         {
             ProdutoValidado = new ProdutoValidado
@@ -50,17 +70,24 @@ public class SimulacaoService : ISimulacaoService
                 Id = produtoSelecionado.Id,
                 Nome = produtoSelecionado.Nome,
                 Tipo = produtoSelecionado.Tipo,
-                Rentabilidade = produtoSelecionado.Rentabilidade,
+                Rentabilidade = rentabilidadeArredondada,
                 Risco = produtoSelecionado.Risco
             },
             ResultadoSimulacao = new ResultadoSimulacao
             {
-                ValorFinal = valorFinal,
-                RentabilidadeEfetiva = produtoSelecionado.Rentabilidade,
+                ValorFinal = valorFinalArredondado,
+                RentabilidadeEfetiva =rentabilidadeArredondada,
                 PrazoMeses = request.PrazoMeses
             },
             DataSimulacao = DateTime.UtcNow
         };
+    }
+
+    private async Task<string> GetProdutosDisponiveisFormatados()
+    {
+        var produtos = await _produtoRepository.GetAllAsync();
+        return string.Join("; ", produtos.Select(p =>
+            $"{p.Nome} (Tipo: {p.Tipo}, Min: R${p.ValorMinimo}, Prazo: {p.PrazoMinimoMeses} meses)"));
     }
 
     public async Task<List<HistoricoSimulacaoResponse>> GetHistoricoSimulacoes()
@@ -79,18 +106,58 @@ public class SimulacaoService : ISimulacaoService
         }).ToList();
     }
 
-    public async Task<List<SimulacaoPorProdutoResponse>> GetSimulacoesPorProdutoDia()
-    {
-        var simulacoes = await _simulacaoRepository.GetSimulacoesPorProdutoDiaAsync();
-
-        // Converter para DTO - implementação simples por enquanto
-        return new List<SimulacaoPorProdutoResponse>();
-    }
 
     private decimal CalcularValorFinal(decimal valorInicial, decimal rentabilidade, int prazoMeses)
     {
         // Fórmula simples de juros compostos
-        return valorInicial * (decimal)Math.Pow(1 + (double)rentabilidade, prazoMeses / 12.0);
+        var valorCalculado = valorInicial * (decimal)Math.Pow(1 + (double)rentabilidade, prazoMeses / 12.0);
+        return Math.Round(valorCalculado, 2);
     }
+
+    public async Task<List<SimulacaoPorProdutoResponse>> GetSimulacoesPorProdutoDia()
+    {
+        var simulacoesAgrupadas = await _simulacaoRepository.GetSimulacoesAgrupadasPorProdutoDiaAsync();
+
+        return simulacoesAgrupadas.Select(s => new SimulacaoPorProdutoResponse
+        {
+            Produto = s.Produto,
+            Data = s.Data.ToString("yyyy-MM-dd"),
+            QuantidadeSimulacoes = s.QuantidadeSimulacoes,
+            MediaValorFinal = s.MediaValorFinal
+        }).ToList();
+    }
+
+    private async Task<ProdutoInvestimento> SelecionarProdutoAdequado(SimulacaoRequest request)
+    {
+        var todosProdutos = await _produtoRepository.GetAllAsync();
+
+        Console.WriteLine($"Buscando produto: Tipo={request.TipoProduto}, Valor={request.Valor}, Prazo={request.PrazoMeses} meses");
+
+        // Filtra produtos que atendem os critérios exatos
+        var produtosCompatíveis = todosProdutos
+            .Where(p => p.Tipo.Equals(request.TipoProduto, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.ValorMinimo <= request.Valor)
+            .Where(p => p.PrazoMinimoMeses <= request.PrazoMeses)
+            .ToList();
+
+        Console.WriteLine($"Produtos compatíveis encontrados: {produtosCompatíveis.Count}");
+
+        // Se encontrou produtos compatíveis, retorna o mais rentável
+        if (produtosCompatíveis.Any())
+        {
+            var produtoSelecionado = produtosCompatíveis
+                .OrderByDescending(p => p.Rentabilidade)
+                .First();
+
+            Console.WriteLine($"Produto selecionado: {produtoSelecionado.Nome} (Rentabilidade: {produtoSelecionado.Rentabilidade})");
+            return produtoSelecionado;
+        }
+
+        //Se não encontrou, retorna null (vamos tratar o erro no método principal)
+        Console.WriteLine("Nenhum produto compatível encontrado");
+        return null;
+    }
+
+
 }
 

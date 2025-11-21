@@ -13,4 +13,13 @@ public interface ISimulacaoRepository
     Task<List<SimulacaoInvestimento>> GetByClienteIdAsync(int clienteId);
     Task<List<SimulacaoInvestimento>> GetAllAsync();
     Task<List<object>> GetSimulacoesPorProdutoDiaAsync();
+    Task<List<SimulacaoPorProdutoDia>> GetSimulacoesAgrupadasPorProdutoDiaAsync();
+
+}
+public class SimulacaoPorProdutoDia
+{
+    public string Produto { get; set; }
+    public DateTime Data { get; set; }
+    public int QuantidadeSimulacoes { get; set; }
+    public decimal MediaValorFinal { get; set; }
 }

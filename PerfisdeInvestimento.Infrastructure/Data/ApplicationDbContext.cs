@@ -35,22 +35,22 @@ public class ApplicationDbContext : DbContext
             new ProdutoInvestimento
             {
                 Id = 1,
-                Nome = "CDB Caixa 2025",
+                Nome = "CDB Caixa 2026",
                 Tipo = "CDB",
                 Rentabilidade = 0.12m,
                 Risco = "Baixo",
-                ValorMinimo = 1000,
+                ValorMinimo = 1000.00m,
                 PrazoMinimoMeses = 6,
                 PerfilRecomendado = "Conservador"
             },
             new ProdutoInvestimento
             {
                 Id = 2,
-                Nome = "Fundo de Investimento Caixa Assets",
+                Nome = "Fundo de Investimento Caixa Asset",
                 Tipo = "Fundo",
                 Rentabilidade = 0.18m,
                 Risco = "Alto",
-                ValorMinimo = 10000,
+                ValorMinimo = 10000.00m,
                 PrazoMinimoMeses = 12,
                 PerfilRecomendado = "Agressivo"
             },

@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PerfisdeInvestimento.Application.DTOs;
-using PerfisdeInvestimento.Application.Interfaces;
 using PerfisdeInvestimento.Application.Interfaces.IServices;
 
 namespace PerfisdeInvestimento.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class SimulacaoController : ControllerBase
 {
     private readonly ISimulacaoService _simulacaoService;
@@ -21,17 +22,10 @@ public class SimulacaoController : ControllerBase
     [HttpPost("simular-investimento")]
     public async Task<ActionResult<SimulacaoResponse>> SimularInvestimento([FromBody] SimulacaoRequest request)
     {
-        try
-        {
-            _logger.LogInformation("Simulação solicitada para cliente {ClienteId}", request.ClienteId);
-            var resultado = await _simulacaoService.SimularInvestimento(request);
-            return Ok(resultado);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Erro ao processar simulação para cliente {ClienteId}", request.ClienteId);
-            return BadRequest(new { error = ex.Message });
-        }
+        _logger.LogInformation("Simulação solicitada para cliente {ClienteId}", request.ClienteId);
+        var resultado = await _simulacaoService.SimularInvestimento(request);
+        return Ok(resultado);
+    
     }
 
     [HttpGet("simulacoes")]
