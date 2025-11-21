@@ -131,14 +131,20 @@ public class SimulacaoService : ISimulacaoService
     {
         var todosProdutos = await _produtoRepository.GetAllAsync();
 
+        if (todosProdutos == null || !todosProdutos.Any())
+        {
+            throw new NotFoundException("Nenhum produto disponível no sistema");
+        }
+
+
         Console.WriteLine($"Buscando produto: Tipo={request.TipoProduto}, Valor={request.Valor}, Prazo={request.PrazoMeses} meses");
 
         // Filtra produtos que atendem os critérios exatos
         var produtosCompatíveis = todosProdutos
-            .Where(p => p.Tipo.Equals(request.TipoProduto, StringComparison.OrdinalIgnoreCase))
-            .Where(p => p.ValorMinimo <= request.Valor)
-            .Where(p => p.PrazoMinimoMeses <= request.PrazoMeses)
-            .ToList();
+        .Where(p => p.Tipo != null && p.Tipo.Equals(request.TipoProduto, StringComparison.OrdinalIgnoreCase))
+        .Where(p => p.ValorMinimo <= request.Valor)
+        .Where(p => p.PrazoMinimoMeses <= request.PrazoMeses)
+        .ToList();
 
         Console.WriteLine($"Produtos compatíveis encontrados: {produtosCompatíveis.Count}");
 
@@ -155,7 +161,10 @@ public class SimulacaoService : ISimulacaoService
 
         //Se não encontrou, retorna null (vamos tratar o erro no método principal)
         Console.WriteLine("Nenhum produto compatível encontrado");
+
+
         return null;
+
     }
 
 

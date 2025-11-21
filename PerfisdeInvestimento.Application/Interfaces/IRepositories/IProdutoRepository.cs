@@ -10,6 +10,6 @@ namespace PerfisdeInvestimento.Application.Interfaces.IRepositories;
 public interface IProdutoRepository
 {
     Task<List<ProdutoInvestimento>> GetProdutosPorPerfilAsync(string perfil);
-    Task<ProdutoInvestimento> GetByIdAsync(int id);
+    Task<ProdutoInvestimento?> GetByIdAsync(int id);
     Task<List<ProdutoInvestimento>> GetAllAsync();
 }

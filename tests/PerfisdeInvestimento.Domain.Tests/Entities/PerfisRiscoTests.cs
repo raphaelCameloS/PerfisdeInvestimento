@@ -8,15 +8,16 @@ public class PerfilRiscoTests
     [Fact]
     public void PerfilRisco_Constructor_ShouldSetDataCalculoToUtcNow()
     {
-       
         var antesCriacao = DateTime.UtcNow;
 
-        
-        var perfil = new PerfilRisco();
+        var perfil = new PerfilRisco
+        {
+            TipoPerfil = "Moderado",          
+            Descricao = "Descrição padrão"    
+        };
 
         var depoisCriacao = DateTime.UtcNow;
 
-        
         Assert.InRange(perfil.DataCalculo, antesCriacao, depoisCriacao);
         Assert.Equal(DateTimeKind.Utc, perfil.DataCalculo.Kind);
     }
@@ -24,10 +25,8 @@ public class PerfilRiscoTests
     [Fact]
     public void PerfilRisco_WithValidData_ShouldCreateSuccessfully()
     {
-        
         var dataCalculo = new DateTime(2024, 1, 15, 10, 30, 0, DateTimeKind.Utc);
 
-        
         var perfil = new PerfilRisco
         {
             Id = 1,
@@ -38,7 +37,6 @@ public class PerfilRiscoTests
             DataCalculo = dataCalculo
         };
 
-       
         Assert.Equal(1, perfil.Id);
         Assert.Equal(123, perfil.ClienteId);
         Assert.Equal("Moderado", perfil.TipoPerfil);
@@ -55,7 +53,8 @@ public class PerfilRiscoTests
     {
         var perfil = new PerfilRisco
         {
-            TipoPerfil = tipoPerfil
+            TipoPerfil = tipoPerfil,
+            Descricao = "Descrição teste"  
         };
 
         Assert.Equal(tipoPerfil, perfil.TipoPerfil);
@@ -72,10 +71,11 @@ public class PerfilRiscoTests
     {
         var perfil = new PerfilRisco
         {
+            TipoPerfil = "Moderado",       
+            Descricao = "Descrição teste", 
             Pontuacao = pontuacao
         };
 
-        
         Assert.Equal(pontuacao, perfil.Pontuacao);
     }
 
@@ -84,7 +84,8 @@ public class PerfilRiscoTests
     {
         var perfil = new PerfilRisco
         {
-            Descricao = null!
+            TipoPerfil = "Moderado",       
+            Descricao = null!              
         };
 
         Assert.Null(perfil.Descricao);
@@ -97,6 +98,7 @@ public class PerfilRiscoTests
 
         var perfil = new PerfilRisco
         {
+            TipoPerfil = "Moderado",       
             Descricao = descricaoLonga
         };
 
@@ -108,13 +110,13 @@ public class PerfilRiscoTests
     {
         var dataEspecifica = new DateTime(2023, 12, 1, 14, 30, 0, DateTimeKind.Utc);
 
-        
         var perfil = new PerfilRisco
         {
+            TipoPerfil = "Moderado",      
+            Descricao = "Descrição teste",
             DataCalculo = dataEspecifica
         };
 
-      
         Assert.Equal(dataEspecifica, perfil.DataCalculo);
         Assert.NotEqual(DateTime.UtcNow, perfil.DataCalculo);
     }
@@ -122,11 +124,20 @@ public class PerfilRiscoTests
     [Fact]
     public void PerfilRisco_CanStoreExtremePontuacaoValues()
     {
-       
-        var perfilMinimo = new PerfilRisco { Pontuacao = int.MinValue };
-        var perfilMaximo = new PerfilRisco { Pontuacao = int.MaxValue };
+        var perfilMinimo = new PerfilRisco
+        {
+            TipoPerfil = "Conservador",    
+            Descricao = "Descrição min",   
+            Pontuacao = int.MinValue
+        };
 
-       
+        var perfilMaximo = new PerfilRisco
+        {
+            TipoPerfil = "Agressivo",      
+            Descricao = "Descrição max",   
+            Pontuacao = int.MaxValue
+        };
+
         Assert.Equal(int.MinValue, perfilMinimo.Pontuacao);
         Assert.Equal(int.MaxValue, perfilMaximo.Pontuacao);
     }
@@ -138,14 +149,13 @@ public class PerfilRiscoTests
     [InlineData(-5, "Não Definido")] // Pontuação negativa com tipo customizado
     public void PerfilRisco_CanCombineAnyPontuacaoWithAnyTipoPerfil(int pontuacao, string tipoPerfil)
     {
-        
         var perfil = new PerfilRisco
         {
             Pontuacao = pontuacao,
-            TipoPerfil = tipoPerfil
+            TipoPerfil = tipoPerfil,
+            Descricao = "Descrição combinada"  
         };
 
-  
         Assert.Equal(pontuacao, perfil.Pontuacao);
         Assert.Equal(tipoPerfil, perfil.TipoPerfil);
     }

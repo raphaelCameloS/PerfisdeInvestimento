@@ -18,7 +18,7 @@ public interface ISimulacaoRepository
 }
 public class SimulacaoPorProdutoDia
 {
-    public string Produto { get; set; }
+    public required string Produto { get; set; }
     public DateTime Data { get; set; }
     public int QuantidadeSimulacoes { get; set; }
     public decimal MediaValorFinal { get; set; }

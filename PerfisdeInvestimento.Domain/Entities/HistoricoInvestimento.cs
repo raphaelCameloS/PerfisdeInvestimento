@@ -10,7 +10,7 @@ namespace PerfisdeInvestimento.Domain.Entities
     {
         public int Id { get; set; }
         public int ClienteId { get; set; }
-        public string Tipo { get; set; }
+        public required string Tipo { get; set; }
         public decimal Valor { get; set; }
         public decimal Rentabilidade { get; set; }
         public DateTime Data { get; set; }

@@ -171,7 +171,6 @@ public class SimulacaoServiceTests
         }
     };
 
-        // Setup para 2 chamadas (uma na seleção, outra no formato de erro)
         _mockProdutoRepository
             .Setup(repo => repo.GetAllAsync())
             .ReturnsAsync(produtos);
@@ -180,7 +179,7 @@ public class SimulacaoServiceTests
         var exception = await Assert.ThrowsAsync<NotFoundException>(() => _service.SimularInvestimento(request));
         Assert.Contains("Nenhum produto compatível encontrado", exception.Message);
 
-        // Agora espera 2 chamadas
+
         _mockProdutoRepository.Verify(repo => repo.GetAllAsync(), Times.Exactly(2));
         _mockSimulacaoRepository.Verify(repo => repo.AddAsync(It.IsAny<SimulacaoInvestimento>()), Times.Never);
     }

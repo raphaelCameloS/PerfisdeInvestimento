@@ -10,9 +10,9 @@ namespace PerfisdeInvestimento.Domain.Entities
     {
         public int Id { get; set; }
         public int ClienteId { get; set; }
-        public string TipoPerfil { get; set; } // "Conservador", "Moderado", "Agressivo"
+        public required string TipoPerfil { get; set; } // "Conservador", "Moderado", "Agressivo"
         public int Pontuacao { get; set; }
-        public string Descricao { get; set; }
+        public required string Descricao { get; set; }
         public DateTime DataCalculo { get; set; }
 
         public PerfilRisco()

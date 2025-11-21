@@ -31,13 +31,14 @@ public class HistoricoInvestimentoTests
     [Fact]
     public void HistoricoInvestimento_WithDefaultValues_ShouldInitializeCorrectly()
     {
-       
-        var historico = new HistoricoInvestimento();
+        var historico = new HistoricoInvestimento
+        {
+            Tipo = "CDB" // ← CORREÇÃO AQUI
+        };
 
-       
         Assert.Equal(0, historico.Id);
         Assert.Equal(0, historico.ClienteId);
-        Assert.Null(historico.Tipo);
+        Assert.Equal("CDB", historico.Tipo); // ← MUDOU DE Assert.Null
         Assert.Equal(0, historico.Valor);
         Assert.Equal(0, historico.Rentabilidade);
         Assert.Equal(default(DateTime), historico.Data);
@@ -49,14 +50,13 @@ public class HistoricoInvestimentoTests
     [InlineData(999999.99)]
     public void HistoricoInvestimento_WithDifferentValores_ShouldStoreCorrectly(decimal valor)
     {
-        
         var historico = new HistoricoInvestimento
         {
+            Tipo = "CDB", // ← ADICIONE AQUI TAMBÉM
             Valor = valor,
             Rentabilidade = 0.10m
         };
 
-        
         Assert.Equal(valor, historico.Valor);
     }
 
@@ -67,46 +67,41 @@ public class HistoricoInvestimentoTests
     [InlineData(0.00)]   // 0%
     public void HistoricoInvestimento_WithDifferentRentabilidades_ShouldStoreCorrectly(decimal rentabilidade)
     {
-        
         var historico = new HistoricoInvestimento
         {
+            Tipo = "CDB", // ← ADICIONE AQUI TAMBÉM
             Valor = 1000m,
             Rentabilidade = rentabilidade
         };
 
-        
         Assert.Equal(rentabilidade, historico.Rentabilidade);
     }
 
     [Fact]
     public void HistoricoInvestimento_WithFutureDate_ShouldStoreCorrectly()
     {
-        
         var dataFutura = DateTime.Now.AddDays(30);
 
-        
         var historico = new HistoricoInvestimento
         {
+            Tipo = "CDB", // ← ADICIONE AQUI TAMBÉM
             Data = dataFutura
         };
 
-        
         Assert.Equal(dataFutura.Date, historico.Data.Date);
     }
 
     [Fact]
     public void HistoricoInvestimento_WithPastDate_ShouldStoreCorrectly()
     {
-        
         var dataPassada = DateTime.Now.AddMonths(-6);
 
-        
         var historico = new HistoricoInvestimento
         {
+            Tipo = "CDB", // ← ADICIONE AQUI TAMBÉM
             Data = dataPassada
         };
 
-        
         Assert.Equal(dataPassada.Date, historico.Data.Date);
     }
 
@@ -119,13 +114,11 @@ public class HistoricoInvestimentoTests
     [InlineData("Ações")]
     public void HistoricoInvestimento_WithDifferentTipos_ShouldStoreCorrectly(string tipo)
     {
-        
         var historico = new HistoricoInvestimento
         {
             Tipo = tipo
         };
 
-       
         Assert.Equal(tipo, historico.Tipo);
     }
 }

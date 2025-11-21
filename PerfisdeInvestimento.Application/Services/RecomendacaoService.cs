@@ -45,35 +45,10 @@ public class RecomendacaoService : IRecomendacaoService
         }
     }
 
-    //public async Task<List<ProdutoRecomendadoResponse>> GetProdutosRecomendados(string perfil)
-    //{
-    //    var perfilNormalizado = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(perfil.ToLower());
-
-    //    var produtos = await _produtoRepository.GetProdutosPorPerfilAsync(perfil);
-
-    //    if (produtos == null || !produtos.Any())
-    //    {
-    //        throw new NotFoundException(
-    //            $"Nenhum produto encontrado para perfil '{perfil}' (normalizado: '{perfilNormalizado}'). " +
-    //            $"Perfis disponíveis no banco: {string.Join(", ", await GetPerfisDisponiveis())}"
-    //        );
-    //    }
-
-    //    return produtos.Select(p => new ProdutoRecomendadoResponse
-    //    {
-    //        Id = p.Id,
-    //        Nome = p.Nome,
-    //        Tipo = p.Tipo,
-    //        Rentabilidade = p.Rentabilidade,
-    //        Risco = p.Risco,
-    //    }).ToList();
-
-    //}
     public async Task<List<ProdutoRecomendadoResponse>> GetProdutosRecomendados(string perfil)
     {
         var perfilNormalizado = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(perfil.ToLower());
 
-        // CORREÇÃO: Usar perfilNormalizado em vez de perfil
         var produtos = await _produtoRepository.GetProdutosPorPerfilAsync(perfilNormalizado);
 
         if (produtos == null || !produtos.Any())
@@ -83,6 +58,7 @@ public class RecomendacaoService : IRecomendacaoService
                 $"Perfis disponíveis no banco: {string.Join(", ", await GetPerfisDisponiveis())}"
             );
         }
+        
 
         return produtos.Select(p => new ProdutoRecomendadoResponse
         {
@@ -95,8 +71,7 @@ public class RecomendacaoService : IRecomendacaoService
     }
     private async Task<List<string>>    GetPerfisDisponiveis()
     {
-        //var todosProdutos = await _produtoRepository.GetAllAsync();
-        //return todosProdutos.Select(p => p.PerfilRecomendado).Distinct().ToList();
+       
         var todosProdutos = await _produtoRepository.GetAllAsync();
 
         if (todosProdutos == null || !todosProdutos.Any())
@@ -104,7 +79,7 @@ public class RecomendacaoService : IRecomendacaoService
 
         return todosProdutos
             .Where(p => !string.IsNullOrEmpty(p.PerfilRecomendado))
-            .Select(p => p.PerfilRecomendado)
+            .Select(p => p.PerfilRecomendado!)
             .Distinct()
             .ToList();
     }

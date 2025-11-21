@@ -8,15 +8,15 @@ public class SimulacaoInvestimentoTests
     [Fact]
     public void SimulacaoInvestimento_Constructor_ShouldSetDataSimulacaoToUtcNow()
     {
-      
         var antesCriacao = DateTime.UtcNow;
 
-        
-        var simulacao = new SimulacaoInvestimento();
+        var simulacao = new SimulacaoInvestimento
+        {
+            Produto = "CDB Teste"  // ← ADICIONADO
+        };
 
         var depoisCriacao = DateTime.UtcNow;
 
-        
         Assert.InRange(simulacao.DataSimulacao, antesCriacao, depoisCriacao);
         Assert.Equal(DateTimeKind.Utc, simulacao.DataSimulacao.Kind);
     }
@@ -24,10 +24,8 @@ public class SimulacaoInvestimentoTests
     [Fact]
     public void SimulacaoInvestimento_WithValidData_ShouldCreateSuccessfully()
     {
-       
         var dataSimulacao = new DateTime(2024, 1, 15, 14, 30, 0, DateTimeKind.Utc);
 
-        
         var simulacao = new SimulacaoInvestimento
         {
             Id = 1,
@@ -39,7 +37,6 @@ public class SimulacaoInvestimentoTests
             DataSimulacao = dataSimulacao
         };
 
-        
         Assert.Equal(1, simulacao.Id);
         Assert.Equal(123, simulacao.ClienteId);
         Assert.Equal("CDB Banco XYZ", simulacao.Produto);
@@ -52,17 +49,18 @@ public class SimulacaoInvestimentoTests
     [Fact]
     public void SimulacaoInvestimento_WithDefaultValues_ShouldInitializeCorrectly()
     {
-        
-        var simulacao = new SimulacaoInvestimento();
+        var simulacao = new SimulacaoInvestimento
+        {
+            Produto = "CDB Teste"  // ← ADICIONADO
+        };
 
-        
         Assert.Equal(0, simulacao.Id);
         Assert.Equal(0, simulacao.ClienteId);
-        Assert.Null(simulacao.Produto);
+        Assert.Equal("CDB Teste", simulacao.Produto);  // ← MUDOU DE Assert.Null
         Assert.Equal(0, simulacao.ValorInvestido);
         Assert.Equal(0, simulacao.ValorFinal);
         Assert.Equal(0, simulacao.PrazoMeses);
-        Assert.NotEqual(default(DateTime), simulacao.DataSimulacao); 
+        Assert.NotEqual(default(DateTime), simulacao.DataSimulacao);
     }
 
     [Theory]
@@ -74,9 +72,9 @@ public class SimulacaoInvestimentoTests
     public void SimulacaoInvestimento_WithDifferentValores_ShouldStoreCorrectly(
         decimal valorInvestido, decimal valorFinal, decimal diferencaEsperada)
     {
-       
         var simulacao = new SimulacaoInvestimento
         {
+            Produto = "CDB Teste",  // ← ADICIONADO
             ValorInvestido = valorInvestido,
             ValorFinal = valorFinal,
             PrazoMeses = 12
@@ -84,7 +82,6 @@ public class SimulacaoInvestimentoTests
 
         var diferencaCalculada = valorFinal - valorInvestido;
 
-        
         Assert.Equal(valorInvestido, simulacao.ValorInvestido);
         Assert.Equal(valorFinal, simulacao.ValorFinal);
         Assert.Equal(diferencaEsperada, diferencaCalculada);
@@ -101,9 +98,9 @@ public class SimulacaoInvestimentoTests
     [InlineData(-12)]  // Prazo negativo
     public void SimulacaoInvestimento_WithDifferentPrazos_ShouldStoreCorrectly(int prazoMeses)
     {
-       
         var simulacao = new SimulacaoInvestimento
         {
+            Produto = "CDB Teste",  // ← ADICIONADO
             PrazoMeses = prazoMeses
         };
 
@@ -121,29 +118,25 @@ public class SimulacaoInvestimentoTests
     [InlineData("Previdência Privada")]
     public void SimulacaoInvestimento_WithDifferentProdutos_ShouldStoreCorrectly(string produto)
     {
-        
         var simulacao = new SimulacaoInvestimento
         {
             Produto = produto
         };
 
-       
         Assert.Equal(produto, simulacao.Produto);
     }
 
     [Fact]
     public void SimulacaoInvestimento_DataSimulacao_CanBeOverridden()
     {
-        
         var dataEspecifica = new DateTime(2023, 12, 1, 10, 0, 0, DateTimeKind.Utc);
 
-        
         var simulacao = new SimulacaoInvestimento
         {
+            Produto = "CDB Teste",  // ← ADICIONADO
             DataSimulacao = dataEspecifica
         };
 
-       
         Assert.Equal(dataEspecifica, simulacao.DataSimulacao);
         Assert.NotEqual(DateTime.UtcNow, simulacao.DataSimulacao); // Diferente do valor default
     }
@@ -151,13 +144,12 @@ public class SimulacaoInvestimentoTests
     [Fact]
     public void SimulacaoInvestimento_WithNegativeValorInvestido_ShouldStoreButIsInvalid()
     {
-        
         var simulacao = new SimulacaoInvestimento
         {
+            Produto = "CDB Teste",  // ← ADICIONADO
             ValorInvestido = -1000m
         };
 
-        
         Assert.Equal(-1000m, simulacao.ValorInvestido);
         Assert.True(simulacao.ValorInvestido < 0);
     }
@@ -165,13 +157,12 @@ public class SimulacaoInvestimentoTests
     [Fact]
     public void SimulacaoInvestimento_WithNegativeValorFinal_ShouldStoreButIsInvalid()
     {
-        
         var simulacao = new SimulacaoInvestimento
         {
+            Produto = "CDB Teste",  // ← ADICIONADO
             ValorFinal = -500m
         };
 
-        
         Assert.Equal(-500m, simulacao.ValorFinal);
         Assert.True(simulacao.ValorFinal < 0);
     }
@@ -179,32 +170,29 @@ public class SimulacaoInvestimentoTests
     [Fact]
     public void SimulacaoInvestimento_CanCalculateRentabilidade()
     {
-        
         var simulacao = new SimulacaoInvestimento
         {
+            Produto = "CDB Teste",  // ← ADICIONADO
             ValorInvestido = 1000m,
             ValorFinal = 1120m,
             PrazoMeses = 12
         };
 
-       
         var rentabilidade = (simulacao.ValorFinal - simulacao.ValorInvestido) / simulacao.ValorInvestido;
 
-        
         Assert.Equal(0.12m, rentabilidade); // 12% de rentabilidade
     }
 
     [Fact]
     public void SimulacaoInvestimento_WithZeroValorInvestido_ShouldStoreButIsInvalid()
     {
-       
         var simulacao = new SimulacaoInvestimento
         {
+            Produto = "CDB Teste",  // ← ADICIONADO
             ValorInvestido = 0m,
             ValorFinal = 0m
         };
 
-       
         Assert.Equal(0m, simulacao.ValorInvestido);
         Assert.Equal(0m, simulacao.ValorFinal);
     }
@@ -212,7 +200,6 @@ public class SimulacaoInvestimentoTests
     [Fact]
     public void SimulacaoInvestimento_CanRepresentShortTermInvestment()
     {
-        
         var simulacao = new SimulacaoInvestimento
         {
             Produto = "CDB Diário",
@@ -221,7 +208,6 @@ public class SimulacaoInvestimentoTests
             PrazoMeses = 1 // 1 mês
         };
 
-       
         Assert.Equal("CDB Diário", simulacao.Produto);
         Assert.True(simulacao.PrazoMeses <= 3); // Curto prazo
         Assert.True(simulacao.ValorFinal > simulacao.ValorInvestido); // Teve rendimento
@@ -230,7 +216,6 @@ public class SimulacaoInvestimentoTests
     [Fact]
     public void SimulacaoInvestimento_CanRepresentLongTermInvestment()
     {
-       
         var simulacao = new SimulacaoInvestimento
         {
             Produto = "Tesouro IPCA+ 2035",
@@ -239,7 +224,6 @@ public class SimulacaoInvestimentoTests
             PrazoMeses = 120 // 10 anos
         };
 
-       
         Assert.Equal("Tesouro IPCA+ 2035", simulacao.Produto);
         Assert.True(simulacao.PrazoMeses >= 60); // Longo prazo (5+ anos)
         Assert.True(simulacao.ValorFinal > simulacao.ValorInvestido * 2); // Mais que dobrou
