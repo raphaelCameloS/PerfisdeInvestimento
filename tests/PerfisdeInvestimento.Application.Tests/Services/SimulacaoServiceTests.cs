@@ -31,7 +31,7 @@ public class SimulacaoServiceTests
     [Fact]
     public async Task SimularInvestimento_WithValidRequest_ShouldReturnSimulationResult()
     {
-        // Arrange
+       
         var request = new SimulacaoRequest
         {
             ClienteId = 1,
@@ -71,17 +71,17 @@ public class SimulacaoServiceTests
 
         _mockSimulacaoRepository
             .Setup(repo => repo.AddAsync(It.IsAny<SimulacaoInvestimento>()))
-            .ReturnsAsync(simulacaoSalva); // Agora retorna a entidade
+            .ReturnsAsync(simulacaoSalva);
 
-        // Act
+       
         var resultado = await _service.SimularInvestimento(request);
 
-        // Assert
+     
         Assert.NotNull(resultado);
         Assert.Equal("CDB Banco XYZ", resultado.ProdutoValidado.Nome);
         Assert.Equal(0.12m, resultado.ProdutoValidado.Rentabilidade);
         Assert.Equal("Médio", resultado.ProdutoValidado.Risco);
-        Assert.True(resultado.ResultadoSimulacao.ValorFinal > 1000); // Deve ter rendimento
+        Assert.True(resultado.ResultadoSimulacao.ValorFinal > 1000); 
 
         _mockProdutoRepository.Verify(repo => repo.GetAllAsync(), Times.Once);
         _mockSimulacaoRepository.Verify(repo => repo.AddAsync(It.IsAny<SimulacaoInvestimento>()), Times.Once);
@@ -90,16 +90,16 @@ public class SimulacaoServiceTests
     [Fact]
     public async Task SimularInvestimento_WithZeroValue_ShouldThrowValidationException()
     {
-        // Arrange
+        
         var request = new SimulacaoRequest
         {
             ClienteId = 1,
             TipoProduto = "CDB",
-            Valor = 0, // Valor inválido
+            Valor = 0, 
             PrazoMeses = 12
         };
 
-        // Act & Assert
+        
         await Assert.ThrowsAsync<ValidationException>(() => _service.SimularInvestimento(request));
 
         // Verifica que NÃO chamou os repositórios
@@ -110,16 +110,16 @@ public class SimulacaoServiceTests
     [Fact]
     public async Task SimularInvestimento_WithNegativeValue_ShouldThrowValidationException()
     {
-        // Arrange
+        
         var request = new SimulacaoRequest
         {
             ClienteId = 1,
             TipoProduto = "CDB",
-            Valor = -100, // Valor inválido
+            Valor = -100, 
             PrazoMeses = 12
         };
 
-        // Act & Assert
+      
         await Assert.ThrowsAsync<ValidationException>(() => _service.SimularInvestimento(request));
 
         _mockProdutoRepository.Verify(repo => repo.GetAllAsync(), Times.Never);
@@ -129,66 +129,26 @@ public class SimulacaoServiceTests
     [Fact]
     public async Task SimularInvestimento_WithZeroMonths_ShouldThrowValidationException()
     {
-        // Arrange
+        
         var request = new SimulacaoRequest
         {
             ClienteId = 1,
             TipoProduto = "CDB",
             Valor = 1000,
-            PrazoMeses = 0 // Prazo inválido
+            PrazoMeses = 0 
         };
 
-        // Act & Assert
         await Assert.ThrowsAsync<ValidationException>(() => _service.SimularInvestimento(request));
 
         _mockProdutoRepository.Verify(repo => repo.GetAllAsync(), Times.Never);
         _mockSimulacaoRepository.Verify(repo => repo.AddAsync(It.IsAny<SimulacaoInvestimento>()), Times.Never);
     }
 
-    //[Fact]
-    //public async Task SimularInvestimento_WhenNoCompatibleProduct_ShouldThrowNotFoundException()
-    //{
-    //    // Arrange
-    //    var request = new SimulacaoRequest
-    //    {
-    //        ClienteId = 1,
-    //        TipoProduto = "CDB",
-    //        Valor = 1000,
-    //        PrazoMeses = 12
-    //    };
-
-    //    var produtos = new List<ProdutoInvestimento>
-    //    {
-    //        new ProdutoInvestimento
-    //        {
-    //            Id = 1,
-    //            Nome = "LCI",
-    //            Tipo = "LCI", // Tipo diferente do solicitado
-    //            Rentabilidade = 0.10m,
-    //            ValorMinimo = 500,
-    //            PrazoMinimoMeses = 6,
-    //            PerfilRecomendado = "Conservador"
-    //        }
-    //    };
-
-    //    _mockProdutoRepository
-    //        .Setup(repo => repo.GetAllAsync())
-    //        .ReturnsAsync(produtos);
-
-    //    // Não setup do AddAsync pois não deve chegar até lá
-
-    //    // Act & Assert
-    //    var exception = await Assert.ThrowsAsync<NotFoundException>(() => _service.SimularInvestimento(request));
-    //    Assert.Contains("Nenhum produto compatível encontrado", exception.Message);
-
-    //    _mockProdutoRepository.Verify(repo => repo.GetAllAsync(), Times.Once);
-    //    _mockSimulacaoRepository.Verify(repo => repo.AddAsync(It.IsAny<SimulacaoInvestimento>()), Times.Never);
-    //}
 
     [Fact]
     public async Task SimularInvestimento_WhenNoCompatibleProduct_ShouldThrowNotFoundException()
     {
-        // Arrange
+       
         var request = new SimulacaoRequest
         {
             ClienteId = 1,
@@ -203,7 +163,7 @@ public class SimulacaoServiceTests
         {
             Id = 1,
             Nome = "LCI",
-            Tipo = "LCI", // Tipo diferente do solicitado
+            Tipo = "LCI", 
             Rentabilidade = 0.10m,
             ValorMinimo = 500,
             PrazoMinimoMeses = 6,
@@ -225,47 +185,11 @@ public class SimulacaoServiceTests
         _mockSimulacaoRepository.Verify(repo => repo.AddAsync(It.IsAny<SimulacaoInvestimento>()), Times.Never);
     }
 
-    //[Fact]
-    //public async Task SimularInvestimento_WhenProductValueTooHigh_ShouldThrowNotFoundException()
-    //{
-    //    // Arrange
-    //    var request = new SimulacaoRequest
-    //    {
-    //        ClienteId = 1,
-    //        TipoProduto = "CDB",
-    //        Valor = 100, // Valor muito baixo
-    //        PrazoMeses = 12
-    //    };
-
-    //    var produtos = new List<ProdutoInvestimento>
-    //    {
-    //        new ProdutoInvestimento
-    //        {
-    //            Id = 1,
-    //            Nome = "CDB Premium",
-    //            Tipo = "CDB",
-    //            Rentabilidade = 0.12m,
-    //            ValorMinimo = 1000, // Valor mínimo maior que o solicitado
-    //            PrazoMinimoMeses = 6,
-    //            PerfilRecomendado = "Moderado"
-    //        }
-    //    };
-
-    //    _mockProdutoRepository
-    //        .Setup(repo => repo.GetAllAsync())
-    //        .ReturnsAsync(produtos);
-
-    //    // Act & Assert
-    //    await Assert.ThrowsAsync<NotFoundException>(() => _service.SimularInvestimento(request));
-
-    //    _mockProdutoRepository.Verify(repo => repo.GetAllAsync(), Times.Once);
-    //    _mockSimulacaoRepository.Verify(repo => repo.AddAsync(It.IsAny<SimulacaoInvestimento>()), Times.Never);
-    //}
 
     [Fact]
     public async Task SimularInvestimento_WhenProductValueTooHigh_ShouldThrowNotFoundException()
     {
-        // Arrange
+        
         var request = new SimulacaoRequest
         {
             ClienteId = 1,
@@ -293,7 +217,7 @@ public class SimulacaoServiceTests
             .Setup(repo => repo.GetAllAsync())
             .ReturnsAsync(produtos);
 
-        // Act & Assert
+       
         await Assert.ThrowsAsync<NotFoundException>(() => _service.SimularInvestimento(request));
 
         // Agora espera 2 chamadas
@@ -305,7 +229,7 @@ public class SimulacaoServiceTests
     [Fact]
     public async Task GetHistoricoSimulacoes_ShouldReturnMappedResponses()
     {
-        // Arrange
+        
         var simulacoes = new List<SimulacaoInvestimento>
         {
             new SimulacaoInvestimento
@@ -324,10 +248,9 @@ public class SimulacaoServiceTests
             .Setup(repo => repo.GetAllAsync())
             .ReturnsAsync(simulacoes);
 
-        // Act
+        
         var resultado = await _service.GetHistoricoSimulacoes();
 
-        // Assert
         Assert.Single(resultado);
         Assert.Equal(1, resultado[0].Id);
         Assert.Equal("CDB", resultado[0].Produto);
@@ -341,17 +264,17 @@ public class SimulacaoServiceTests
     [Fact]
     public async Task GetHistoricoSimulacoes_WhenEmpty_ShouldReturnEmptyList()
     {
-        // Arrange
+        
         var simulacoes = new List<SimulacaoInvestimento>();
 
         _mockSimulacaoRepository
             .Setup(repo => repo.GetAllAsync())
             .ReturnsAsync(simulacoes);
 
-        // Act
+        
         var resultado = await _service.GetHistoricoSimulacoes();
 
-        // Assert
+       
         Assert.Empty(resultado);
         _mockSimulacaoRepository.Verify(repo => repo.GetAllAsync(), Times.Once);
     }
@@ -359,7 +282,7 @@ public class SimulacaoServiceTests
     [Fact]
     public async Task GetSimulacoesPorProdutoDia_ShouldReturnGroupedData()
     {
-        // Arrange
+        
         var simulacoesAgrupadas = new List<SimulacaoPorProdutoDia>
         {
             new SimulacaoPorProdutoDia
@@ -375,10 +298,10 @@ public class SimulacaoServiceTests
             .Setup(repo => repo.GetSimulacoesAgrupadasPorProdutoDiaAsync())
             .ReturnsAsync(simulacoesAgrupadas);
 
-        // Act
+      
         var resultado = await _service.GetSimulacoesPorProdutoDia();
 
-        // Assert
+        
         Assert.Single(resultado);
         Assert.Equal("CDB", resultado[0].Produto);
         Assert.Equal(5, resultado[0].QuantidadeSimulacoes);
@@ -388,30 +311,10 @@ public class SimulacaoServiceTests
         _mockSimulacaoRepository.Verify(repo => repo.GetSimulacoesAgrupadasPorProdutoDiaAsync(), Times.Once);
     }
 
-    //[Fact]
-    //public void CalcularValorFinal_WithValidParameters_ShouldCalculateCorrectly()
-    //{
-    //    // Arrange
-    //    var valorInicial = 1000m;
-    //    var rentabilidade = 0.12m; // 12% ao ano
-    //    var prazoMeses = 12; // 1 ano
-
-    //    // Usando reflection para testar método privado
-    //    var metodoCalcular = typeof(SimulacaoService)
-    //        .GetMethod("CalcularValorFinal", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-
-    //    // Act
-    //    var valorFinal = (decimal)metodoCalcular.Invoke(_service, new object[] { valorInicial, rentabilidade, prazoMeses });
-
-    //    // Assert
-    //    var valorEsperado = 1120m; // 1000 * (1 + 0.12)^1
-    //    Assert.Equal(valorEsperado, valorFinal);
-    //}
-
     [Fact]
     public void CalcularValorFinal_WithValidParameters_ShouldCalculateCorrectly()
     {
-        // Arrange
+        
         var valorInicial = 1000m;
         var rentabilidade = 0.12m;
         var prazoMeses = 12;
@@ -419,41 +322,22 @@ public class SimulacaoServiceTests
         var metodoCalcular = typeof(SimulacaoService)
             .GetMethod("CalcularValorFinal", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
-        // Correção do warning - verifica se não é nulo
+        
         Assert.NotNull(metodoCalcular);
 
-        // Act
+        
         var valorFinal = (decimal)metodoCalcular!.Invoke(_service, new object[] { valorInicial, rentabilidade, prazoMeses })!;
 
-        // Assert
+        
         var valorEsperado = 1120m;
         Assert.Equal(valorEsperado, valorFinal);
     }
 
 
-    //[Fact]
-    //public void CalcularValorFinal_WithSixMonths_ShouldCalculateCorrectly()
-    //{
-    //    // Arrange
-    //    var valorInicial = 1000m;
-    //    var rentabilidade = 0.12m; // 12% ao ano
-    //    var prazoMeses = 6; // 6 meses = 0.5 ano
-
-    //    var metodoCalcular = typeof(SimulacaoService)
-    //        .GetMethod("CalcularValorFinal", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-
-    //    // Act
-    //    var valorFinal = (decimal)metodoCalcular.Invoke(_service, new object[] { valorInicial, rentabilidade, prazoMeses });
-
-    //    // Assert
-    //    var valorEsperado = 1058.30m; // 1000 * (1 + 0.12)^0.5 ≈ 1058.30
-    //    Assert.Equal(valorEsperado, valorFinal, 2); // Precisão de 2 casas decimais
-    //}
-
     [Fact]
     public void CalcularValorFinal_WithSixMonths_ShouldCalculateCorrectly()
     {
-        // Arrange
+        
         var valorInicial = 1000m;
         var rentabilidade = 0.12m;
         var prazoMeses = 6;
@@ -461,13 +345,13 @@ public class SimulacaoServiceTests
         var metodoCalcular = typeof(SimulacaoService)
             .GetMethod("CalcularValorFinal", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
-        // Correção do warning
+       
         Assert.NotNull(metodoCalcular);
 
-        // Act
+        
         var valorFinal = (decimal)metodoCalcular!.Invoke(_service, new object[] { valorInicial, rentabilidade, prazoMeses })!;
 
-        // Assert
+       
         var valorEsperado = 1058.30m;
         Assert.Equal(valorEsperado, valorFinal, 2);
     }

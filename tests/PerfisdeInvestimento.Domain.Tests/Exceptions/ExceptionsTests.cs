@@ -8,13 +8,12 @@ public class DomainExceptionsTests
     [Fact]
     public void NotFoundException_ShouldCreateWithMessage()
     {
-        // Arrange
         var mensagem = "Cliente não encontrado";
 
-        // Act
+        
         var exception = new NotFoundException(mensagem);
 
-        // Assert
+      
         Assert.Equal(mensagem, exception.Message);
         Assert.Null(exception.InnerException);
     }
@@ -22,10 +21,9 @@ public class DomainExceptionsTests
     [Fact]
     public void NotFoundException_ShouldBeOfCorrectType()
     {
-        // Arrange & Act
         var exception = new NotFoundException("Teste");
 
-        // Assert
+       
         Assert.IsType<NotFoundException>(exception);
         Assert.IsAssignableFrom<Exception>(exception);
     }
@@ -33,13 +31,13 @@ public class DomainExceptionsTests
     [Fact]
     public void BusinessException_ShouldCreateWithMessage()
     {
-        // Arrange
+       
         var mensagem = "Erro de negócio na simulação";
 
-        // Act
+       
         var exception = new BusinessException(mensagem);
 
-        // Assert
+        
         Assert.Equal(mensagem, exception.Message);
         Assert.Null(exception.InnerException);
     }
@@ -47,10 +45,10 @@ public class DomainExceptionsTests
     [Fact]
     public void BusinessException_ShouldBeOfCorrectType()
     {
-        // Arrange & Act
+        
         var exception = new BusinessException("Teste");
 
-        // Assert
+        
         Assert.IsType<BusinessException>(exception);
         Assert.IsAssignableFrom<Exception>(exception);
     }
@@ -58,13 +56,13 @@ public class DomainExceptionsTests
     [Fact]
     public void ValidationException_ShouldCreateWithMessage()
     {
-        // Arrange
+       
         var mensagem = "Dados de entrada inválidos";
 
-        // Act
+        
         var exception = new ValidationException(mensagem);
 
-        // Assert
+        
         Assert.Equal(mensagem, exception.Message);
         Assert.Null(exception.InnerException);
     }
@@ -72,10 +70,10 @@ public class DomainExceptionsTests
     [Fact]
     public void ValidationException_ShouldBeOfCorrectType()
     {
-        // Arrange & Act
+        
         var exception = new ValidationException("Teste");
 
-        // Assert
+      
         Assert.IsType<ValidationException>(exception);
         Assert.IsAssignableFrom<Exception>(exception);
     }
@@ -87,10 +85,9 @@ public class DomainExceptionsTests
     [InlineData("Erro: Cliente ID 123 não possui histórico de investimentos")]
     public void NotFoundException_WithDifferentMessages_ShouldStoreCorrectly(string mensagem)
     {
-        // Arrange & Act
+        
         var exception = new NotFoundException(mensagem);
 
-        // Assert
         Assert.Equal(mensagem, exception.Message);
     }
 
@@ -101,10 +98,10 @@ public class DomainExceptionsTests
     [InlineData("Erro ao calcular perfil do cliente: Dados inconsistentes")]
     public void BusinessException_WithDifferentMessages_ShouldStoreCorrectly(string mensagem)
     {
-        // Arrange & Act
+     
         var exception = new BusinessException(mensagem);
 
-        // Assert
+       
         Assert.Equal(mensagem, exception.Message);
     }
 
@@ -115,27 +112,27 @@ public class DomainExceptionsTests
     [InlineData("Prazo em meses deve ser um número positivo")]
     public void ValidationException_WithDifferentMessages_ShouldStoreCorrectly(string mensagem)
     {
-        // Arrange & Act
+        
         var exception = new ValidationException(mensagem);
 
-        // Assert
+        
         Assert.Equal(mensagem, exception.Message);
     }
 
     [Fact]
     public void Exceptions_ShouldBeUsedInAppropriateScenarios()
     {
-        // Arrange
+        
         var notFoundMessage = "Produto com ID 999 não encontrado";
         var businessMessage = "Cliente não elegível para este tipo de investimento";
         var validationMessage = "Valor do investimento não pode ser negativo";
 
-        // Act
+       
         var notFoundEx = new NotFoundException(notFoundMessage);
         var businessEx = new BusinessException(businessMessage);
         var validationEx = new ValidationException(validationMessage);
 
-        // Assert - Verifica que cada exception tem uma mensagem específica do domínio
+        
         Assert.Contains("não encontrado", notFoundEx.Message);
         Assert.Contains("não elegível", businessEx.Message);
         Assert.Contains("não pode ser negativo", validationEx.Message);
@@ -144,12 +141,11 @@ public class DomainExceptionsTests
     [Fact]
     public void Exceptions_ShouldHaveDifferentTypesForDifferentPurposes()
     {
-        // Arrange & Act
         var notFoundEx = new NotFoundException("Não encontrado");
         var businessEx = new BusinessException("Erro de negócio");
         var validationEx = new ValidationException("Validação falhou");
 
-        // Assert - Cada exception tem um tipo distinto para diferentes cenários
+        
         Assert.IsType<NotFoundException>(notFoundEx);
         Assert.IsType<BusinessException>(businessEx);
         Assert.IsType<ValidationException>(validationEx);
@@ -163,10 +159,10 @@ public class DomainExceptionsTests
     [Fact]
     public void Exceptions_CanBeUsedInTryCatchBlocks()
     {
-        // Arrange
+       
         var mensagem = "Erro específico do domínio";
 
-        // Act & Assert - Testa o uso prático em blocos try-catch
+   
         try
         {
             throw new BusinessException(mensagem);

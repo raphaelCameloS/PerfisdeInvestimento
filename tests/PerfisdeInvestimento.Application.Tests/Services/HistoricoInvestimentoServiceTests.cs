@@ -23,7 +23,7 @@ public class HistoricoInvestimentoServiceTests
     [Fact]
     public async Task GetHistoricoInvestimentos_WithValidClienteId_ShouldReturnHistoricoList()
     {
-        // Arrange
+        
         var clienteId = 1;
         var historicos = new List<HistoricoInvestimento>
         {
@@ -51,10 +51,10 @@ public class HistoricoInvestimentoServiceTests
             .Setup(repo => repo.GetByClienteIdAsync(clienteId))
             .ReturnsAsync(historicos);
 
-        // Act
+        
         var resultado = await _service.GetHistoricoInvestimentos(clienteId);
 
-        // Assert
+        
         Assert.Equal(2, resultado.Count);
 
         var primeiroItem = resultado[0];
@@ -77,7 +77,7 @@ public class HistoricoInvestimentoServiceTests
     [Fact]
     public async Task GetHistoricoInvestimentos_WithEmptyHistory_ShouldThrowNotFoundException()
     {
-        // Arrange
+        
         var clienteId = 999;
         var historicoVazio = new List<HistoricoInvestimento>();
 
@@ -85,7 +85,7 @@ public class HistoricoInvestimentoServiceTests
             .Setup(repo => repo.GetByClienteIdAsync(clienteId))
             .ReturnsAsync(historicoVazio);
 
-        // Act & Assert
+       
         var exception = await Assert.ThrowsAsync<NotFoundException>(() => _service.GetHistoricoInvestimentos(clienteId));
 
         Assert.Contains($"Cliente {clienteId} não possui histórico de investimentos", exception.Message);
@@ -95,7 +95,7 @@ public class HistoricoInvestimentoServiceTests
     [Fact]
     public async Task GetHistoricoInvestimentos_WithSingleInvestment_ShouldReturnSingleItem()
     {
-        // Arrange
+        
         var clienteId = 456;
         var historicos = new List<HistoricoInvestimento>
         {
@@ -114,10 +114,10 @@ public class HistoricoInvestimentoServiceTests
             .Setup(repo => repo.GetByClienteIdAsync(clienteId))
             .ReturnsAsync(historicos);
 
-        // Act
+       
         var resultado = await _service.GetHistoricoInvestimentos(clienteId);
 
-        // Assert
+        
         Assert.Single(resultado);
         Assert.Equal("LCI", resultado[0].Tipo);
         Assert.Equal(10000.00m, resultado[0].Valor);
@@ -128,7 +128,7 @@ public class HistoricoInvestimentoServiceTests
     [Fact]
     public async Task GetHistoricoInvestimentos_ShouldFormatDateCorrectly()
     {
-        // Arrange
+        
         var clienteId = 1;
         var historicos = new List<HistoricoInvestimento>
         {
@@ -139,7 +139,7 @@ public class HistoricoInvestimentoServiceTests
                 Tipo = "CDB",
                 Valor = 1000m,
                 Rentabilidade = 0.12m,
-                Data = new DateTime(2024, 12, 25) // Data específica para testar formato
+                Data = new DateTime(2024, 12, 25) 
             }
         };
 
@@ -147,11 +147,10 @@ public class HistoricoInvestimentoServiceTests
             .Setup(repo => repo.GetByClienteIdAsync(clienteId))
             .ReturnsAsync(historicos);
 
-        // Act
         var resultado = await _service.GetHistoricoInvestimentos(clienteId);
 
-        // Assert
-        Assert.Equal("2024-12-25", resultado[0].Data); // Verifica formato yyyy-MM-dd
+        
+        Assert.Equal("2024-12-25", resultado[0].Data); 
     }
 
     [Theory]
@@ -160,14 +159,14 @@ public class HistoricoInvestimentoServiceTests
     [InlineData(12345)]
     public async Task GetHistoricoInvestimentos_WithDifferentClientIds_ShouldCallRepositoryWithCorrectId(int clienteId)
     {
-        // Arrange
+        
         var historicoVazio = new List<HistoricoInvestimento>();
 
         _mockHistoricoRepository
             .Setup(repo => repo.GetByClienteIdAsync(clienteId))
             .ReturnsAsync(historicoVazio);
 
-        // Act & Assert
+        
         await Assert.ThrowsAsync<NotFoundException>(() => _service.GetHistoricoInvestimentos(clienteId));
 
         _mockHistoricoRepository.Verify(repo => repo.GetByClienteIdAsync(clienteId), Times.Once);

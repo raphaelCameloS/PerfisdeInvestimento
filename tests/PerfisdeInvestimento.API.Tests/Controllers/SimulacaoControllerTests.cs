@@ -28,7 +28,7 @@ public class SimulacaoControllerTests
     }
 
     [Fact]
-    public async Task GetSimulacoesPorProdutoDia_DeveRetornarOkComLista()
+    public async Task GetSimulacoesPorProdutoDia_ShouldReturnListOk()
     {
         // Arrange
         var simulacoesEsperadas = new List<SimulacaoPorProdutoResponse>
@@ -59,7 +59,7 @@ public class SimulacaoControllerTests
     }
 
     [Fact]
-    public async Task GetSimulacoesPorProdutoDia_DeveRetornarListaVazia()
+    public async Task GetSimulacoesPorProdutoDia_ShouldReturnEmptyList()
     {
         // Arrange
         var listaVazia = new List<SimulacaoPorProdutoResponse>();
@@ -79,7 +79,7 @@ public class SimulacaoControllerTests
     }
 
     [Fact]
-    public async Task GetSimulacoes_WhenDataExists_DeveRetornarListHistorico()
+    public async Task GetSimulacoes_WhenDataExists_ShouldReturnHistoricoList()
     {
         // Arrange
         var historicoEsperado = new List<HistoricoSimulacaoResponse>
@@ -110,7 +110,7 @@ public class SimulacaoControllerTests
     }
 
     [Fact]
-    public async Task SimularInvestimento_WhenValidRequest_DeveRetornarResultdoSimulcao()
+    public async Task SimularInvestimento_WhenValidRequest_ShouldReturnSimulacaoResult()
     {
         // Arrange
         var request = new SimulacaoRequest

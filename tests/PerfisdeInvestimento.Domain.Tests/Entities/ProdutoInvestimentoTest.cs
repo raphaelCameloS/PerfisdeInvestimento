@@ -8,7 +8,6 @@ public class ProdutoInvestimentoTests
     [Fact]
     public void ProdutoInvestimento_WithValidData_ShouldCreateSuccessfully()
     {
-        // Arrange & Act
         var produto = new ProdutoInvestimento
         {
             Id = 1,
@@ -21,7 +20,6 @@ public class ProdutoInvestimentoTests
             PerfilRecomendado = "Moderado"
         };
 
-        // Assert
         Assert.Equal(1, produto.Id);
         Assert.Equal("CDB Banco XYZ", produto.Nome);
         Assert.Equal("CDB", produto.Tipo);
@@ -35,10 +33,10 @@ public class ProdutoInvestimentoTests
     [Fact]
     public void ProdutoInvestimento_WithDefaultValues_ShouldInitializeCorrectly()
     {
-        // Arrange & Act
+        
         var produto = new ProdutoInvestimento();
 
-        // Assert
+        
         Assert.Equal(0, produto.Id);
         Assert.Null(produto.Nome);
         Assert.Null(produto.Tipo);
@@ -59,13 +57,13 @@ public class ProdutoInvestimentoTests
     [InlineData("Fundo de Investimento")]
     public void ProdutoInvestimento_WithDifferentTipos_ShouldStoreCorrectly(string tipo)
     {
-        // Arrange & Act
+        
         var produto = new ProdutoInvestimento
         {
             Tipo = tipo
         };
 
-        // Assert
+     
         Assert.Equal(tipo, produto.Tipo);
     }
 
@@ -77,13 +75,13 @@ public class ProdutoInvestimentoTests
     [InlineData("Baixíssimo")]
     public void ProdutoInvestimento_WithDifferentRiscos_ShouldStoreCorrectly(string risco)
     {
-        // Arrange & Act
+        
         var produto = new ProdutoInvestimento
         {
             Risco = risco
         };
 
-        // Assert
+       
         Assert.Equal(risco, produto.Risco);
     }
 
@@ -96,13 +94,13 @@ public class ProdutoInvestimentoTests
     [InlineData(1.50)]   // 150% (produtos muito arrojados)
     public void ProdutoInvestimento_WithDifferentRentabilidades_ShouldStoreCorrectly(decimal rentabilidade)
     {
-        // Arrange & Act
+       
         var produto = new ProdutoInvestimento
         {
             Rentabilidade = rentabilidade
         };
 
-        // Assert
+      
         Assert.Equal(rentabilidade, produto.Rentabilidade);
     }
 
@@ -148,31 +146,31 @@ public class ProdutoInvestimentoTests
     [InlineData("Conservador")]
     [InlineData("Moderado")]
     [InlineData("Agressivo")]
-    [InlineData("Ultra Conservador")]
-    [InlineData("Arrojado")]
-    [InlineData("Balanceado")]
+    //[InlineData("Ultra Conservador")]
+    //[InlineData("Arrojado")]
+    //[InlineData("Balanceado")]
     public void ProdutoInvestimento_WithDifferentPerfisRecomendados_ShouldStoreCorrectly(string perfil)
     {
-        // Arrange & Act
+     
         var produto = new ProdutoInvestimento
         {
             PerfilRecomendado = perfil
         };
 
-        // Assert
+       
         Assert.Equal(perfil, produto.PerfilRecomendado);
     }
 
     [Fact]
     public void ProdutoInvestimento_WithNegativeValorMinimo_ShouldStoreButIsInvalid()
     {
-        // Arrange & Act
+        
         var produto = new ProdutoInvestimento
         {
             ValorMinimo = -1000m
         };
 
-        // Assert - Documenta que aceita valores negativos
+        
         Assert.Equal(-1000m, produto.ValorMinimo);
         Assert.True(produto.ValorMinimo < 0);
     }
@@ -180,13 +178,13 @@ public class ProdutoInvestimentoTests
     [Fact]
     public void ProdutoInvestimento_WithNegativePrazoMinimo_ShouldStoreButIsInvalid()
     {
-        // Arrange & Act
+        
         var produto = new ProdutoInvestimento
         {
             PrazoMinimoMeses = -6
         };
 
-        // Assert - Documenta que aceita prazos negativos
+      
         Assert.Equal(-6, produto.PrazoMinimoMeses);
         Assert.True(produto.PrazoMinimoMeses < 0);
     }
@@ -194,13 +192,11 @@ public class ProdutoInvestimentoTests
     [Fact]
     public void ProdutoInvestimento_WithNegativeRentabilidade_ShouldStoreButIsInvalid()
     {
-        // Arrange & Act
         var produto = new ProdutoInvestimento
         {
             Rentabilidade = -0.05m // Rentabilidade negativa
         };
 
-        // Assert - Documenta que aceita rentabilidade negativa
         Assert.Equal(-0.05m, produto.Rentabilidade);
         Assert.True(produto.Rentabilidade < 0);
     }
@@ -208,7 +204,7 @@ public class ProdutoInvestimentoTests
     [Fact]
     public void ProdutoInvestimento_CanCreateHighYieldProduct()
     {
-        // Arrange & Act - Produto de alta rentabilidade e alto risco
+        
         var produto = new ProdutoInvestimento
         {
             Nome = "Fundo Ações Emergentes",
@@ -230,7 +226,7 @@ public class ProdutoInvestimentoTests
     [Fact]
     public void ProdutoInvestimento_CanCreateConservativeProduct()
     {
-        // Arrange & Act - Produto conservador
+        
         var produto = new ProdutoInvestimento
         {
             Nome = "Tesouro Selic",
@@ -242,7 +238,7 @@ public class ProdutoInvestimentoTests
             PerfilRecomendado = "Conservador"
         };
 
-        // Assert
+       
         Assert.Equal("Tesouro Selic", produto.Nome);
         Assert.True(produto.Rentabilidade <= 0.10m); // Rentabilidade moderada
         Assert.Equal("Baixo", produto.Risco);

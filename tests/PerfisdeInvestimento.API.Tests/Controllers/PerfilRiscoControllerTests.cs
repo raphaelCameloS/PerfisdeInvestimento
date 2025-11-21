@@ -29,7 +29,7 @@ public class PerfilRiscoControllerTests
     [Fact]
     public async Task GetPerfilRisco_WhenClienteExists_ShouldReturnPerfilRisco()
     {
-        // Arrange
+       
         var clienteId = 123;
         var perfilEsperado = new PerfilRiscoResponse
         {
@@ -43,13 +43,13 @@ public class PerfilRiscoControllerTests
             .Setup(service => service.CalcularPerfilRisco(clienteId))
             .ReturnsAsync(perfilEsperado);
 
-        // Act
+       
         var resultado = await _controller.GetPerfilRisco(clienteId);
 
-        // Assert
-        var okResult = Assert.IsType<OkObjectResult>(resultado);
+        var actionResult = Assert.IsType<ActionResult<PerfilRiscoResponse>>(resultado);
+        var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
         var retorno = Assert.IsType<PerfilRiscoResponse>(okResult.Value);
-
+        
         Assert.Equal(clienteId, retorno.ClienteId);
         Assert.Equal("Moderado", retorno.Perfil);
         Assert.Equal(65, retorno.Pontuacao);
@@ -62,7 +62,7 @@ public class PerfilRiscoControllerTests
     [Fact]
     public async Task GetProdutosRecomendados_WhenValidPerfil_ShouldReturnProdutosList()
     {
-        // Arrange
+        
         var perfil = "moderado";
         var perfilNormalizado = "Moderado";
         var produtosEsperados = new List<ProdutoRecomendadoResponse>
@@ -81,10 +81,10 @@ public class PerfilRiscoControllerTests
             .Setup(service => service.GetProdutosRecomendados(perfilNormalizado))
             .ReturnsAsync(produtosEsperados);
 
-        // Act
+       
         var resultado = await _controller.GetProdutosRecomendados(perfil);
 
-        // Assert
+        
         var okResult = Assert.IsType<OkObjectResult>(resultado);
         var retorno = Assert.IsType<List<ProdutoRecomendadoResponse>>(okResult.Value);
 
@@ -105,17 +105,17 @@ public class PerfilRiscoControllerTests
     [InlineData("aGrEssIvE", "Agressive")] // Se existir este perfil
     public async Task GetProdutosRecomendados_WithDifferentCases_ShouldNormalizePerfil(string perfilInput, string perfilNormalizadoEsperado)
     {
-        // Arrange
+        
         var produtosEsperados = new List<ProdutoRecomendadoResponse>();
 
         _mockRecomendacaoService
             .Setup(service => service.GetProdutosRecomendados(perfilNormalizadoEsperado))
             .ReturnsAsync(produtosEsperados);
 
-        // Act
+       
         var resultado = await _controller.GetProdutosRecomendados(perfilInput);
 
-        // Assert
+       
         var okResult = Assert.IsType<OkObjectResult>(resultado);
 
         _mockRecomendacaoService.Verify(
@@ -126,7 +126,6 @@ public class PerfilRiscoControllerTests
     [Fact]
     public async Task GetProdutosRecomendados_WhenMultipleProducts_ShouldReturnAll()
     {
-        // Arrange
         var perfil = "conservador";
         var perfilNormalizado = "Conservador";
         var produtosEsperados = new List<ProdutoRecomendadoResponse>
@@ -140,10 +139,10 @@ public class PerfilRiscoControllerTests
             .Setup(service => service.GetProdutosRecomendados(perfilNormalizado))
             .ReturnsAsync(produtosEsperados);
 
-        // Act
+        
         var resultado = await _controller.GetProdutosRecomendados(perfil);
 
-        // Assert
+        
         var okResult = Assert.IsType<OkObjectResult>(resultado);
         var retorno = Assert.IsType<List<ProdutoRecomendadoResponse>>(okResult.Value);
 

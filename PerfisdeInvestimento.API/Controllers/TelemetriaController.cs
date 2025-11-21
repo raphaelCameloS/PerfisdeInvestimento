@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PerfisdeInvestimento.Application.DTOs;
-using PerfisdeInvestimento.Application.Interfaces.IServices;
 
 namespace PerfisdeInvestimento.API.Controllers;
 

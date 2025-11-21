@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PerfisdeInvestimento.Application.DTOs;
-using PerfisdeInvestimento.Application.Interfaces;
 using PerfisdeInvestimento.Application.Interfaces.IServices;
 
 namespace PerfisdeInvestimento.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class SimulacaoController : ControllerBase
 {
     private readonly ISimulacaoService _simulacaoService;

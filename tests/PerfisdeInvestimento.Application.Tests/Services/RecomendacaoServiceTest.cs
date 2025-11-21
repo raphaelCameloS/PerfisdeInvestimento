@@ -25,7 +25,7 @@ public class RecomendacaoServiceTests
     [Fact]
     public async Task CalcularPerfilRisco_WithInvestmentHistory_ShouldReturnPerfilCalculado()
     {
-        // Arrange
+        
         var clienteId = 1;
         var historico = new List<HistoricoInvestimento>
         {
@@ -36,7 +36,7 @@ public class RecomendacaoServiceTests
                 Tipo = "CDB",
                 Valor = 30000,
                 Rentabilidade = 0.12m,
-                Data = DateTime.Now.AddMonths(-1) // DateTime, não string
+                Data = DateTime.Now.AddMonths(-1) 
             },
             new HistoricoInvestimento
             {
@@ -45,7 +45,7 @@ public class RecomendacaoServiceTests
                 Tipo = "Ação",
                 Valor = 25000,
                 Rentabilidade = 0.15m,
-                Data = DateTime.Now.AddMonths(-2) // DateTime, não string
+                Data = DateTime.Now.AddMonths(-2) 
             }
         };
 
@@ -66,30 +66,11 @@ public class RecomendacaoServiceTests
         _mockHistoricoRepository.Verify(repo => repo.GetByClienteIdAsync(clienteId), Times.Once);
     }
 
-    //[Fact]
-    //public async Task CalcularPerfilRisco_WithNullHistory_ShouldThrowNotFoundException()
-    //{
-    //    // Arrange
-    //    var clienteId = 1;
-    //    List<HistoricoInvestimento> historicoNulo = null;
-
-    //    _mockHistoricoRepository
-    //        .Setup(repo => repo.GetByClienteIdAsync(clienteId))
-    //        .ReturnsAsync(historicoNulo);
-
-    //    // Act & Assert - AGORA espera NotFoundException
-    //    var exception = await Assert.ThrowsAsync<NotFoundException>(() => _service.CalcularPerfilRisco(clienteId));
-
-    //    Assert.Contains("não possui histórico de investimentos", exception.Message);
-    //    Assert.Contains(clienteId.ToString(), exception.Message);
-
-    //    _mockHistoricoRepository.Verify(repo => repo.GetByClienteIdAsync(clienteId), Times.Once);
-    //}
 
     [Fact]
     public async Task CalcularPerfilRisco_WithNullHistory_ShouldThrowNotFoundException()
     {
-        // Arrange
+     
         var clienteId = 1;
         List<HistoricoInvestimento> historicoNulo = null!;
 
@@ -97,7 +78,7 @@ public class RecomendacaoServiceTests
             .Setup(repo => repo.GetByClienteIdAsync(clienteId))
             .ReturnsAsync(historicoNulo);
 
-        // Act & Assert
+       
         var exception = await Assert.ThrowsAsync<NotFoundException>(() => _service.CalcularPerfilRisco(clienteId));
 
         Assert.Contains("não possui histórico de investimentos", exception.Message);
@@ -109,7 +90,7 @@ public class RecomendacaoServiceTests
     [Fact]
     public async Task CalcularPerfilRisco_WithEmptyHistory_ShouldThrowNotFoundException()
     {
-        // Arrange
+        
         var clienteId = 1;
         var historicoVazio = new List<HistoricoInvestimento>();
 
@@ -117,7 +98,7 @@ public class RecomendacaoServiceTests
             .Setup(repo => repo.GetByClienteIdAsync(clienteId))
             .ReturnsAsync(historicoVazio);
 
-        // Act & Assert
+        
         var exception = await Assert.ThrowsAsync<NotFoundException>(() => _service.CalcularPerfilRisco(clienteId));
 
         Assert.Contains("não possui histórico de investimentos", exception.Message);
@@ -125,30 +106,10 @@ public class RecomendacaoServiceTests
         _mockHistoricoRepository.Verify(repo => repo.GetByClienteIdAsync(clienteId), Times.Once);
     }
 
-    //[Fact]
-    //public async Task CalcularPerfilRisco_WithNullHistory_ShouldReturnPerfilConservador()
-    //{
-    //    // Arrange
-    //    var clienteId = 1;
-    //    List<HistoricoInvestimento> historicoNulo = null!;
-
-    //    _mockHistoricoRepository
-    //        .Setup(repo => repo.GetByClienteIdAsync(clienteId))
-    //        .ReturnsAsync(historicoNulo);
-
-    //    // Act
-    //    var resultado = await _service.CalcularPerfilRisco(clienteId);
-
-    //    // Assert
-    //    Assert.NotNull(resultado);
-    //    Assert.Equal("Conservador", resultado.Perfil);
-    //    Assert.Equal(25, resultado.Pontuacao);
-    //}
-
     [Fact]
     public async Task GetProdutosRecomendados_WithValidPerfil_ShouldReturnProdutosFiltrados()
     {
-        // Arrange
+        
         var perfil = "Moderado";
         var produtos = new List<ProdutoInvestimento>
         {
@@ -176,10 +137,10 @@ public class RecomendacaoServiceTests
             .Setup(repo => repo.GetProdutosPorPerfilAsync(perfil))
             .ReturnsAsync(produtos);
 
-        // Act
+        
         var resultado = await _service.GetProdutosRecomendados(perfil);
 
-        // Assert
+        
         Assert.Equal(2, resultado.Count);
         Assert.All(resultado, p => Assert.NotNull(p.Risco));
         Assert.Contains(resultado, p => p.Nome == "CDB Moderado");
@@ -191,7 +152,7 @@ public class RecomendacaoServiceTests
     [Fact]
     public async Task GetProdutosRecomendados_WithNoProductsForPerfil_ShouldThrowNotFoundException()
     {
-        // Arrange
+        
         var perfil = "Inexistente";
         var produtosVazios = new List<ProdutoInvestimento>();
 
@@ -199,7 +160,7 @@ public class RecomendacaoServiceTests
             .Setup(repo => repo.GetProdutosPorPerfilAsync(perfil))
             .ReturnsAsync(produtosVazios);
 
-        // Setup para o método que busca perfis disponíveis
+        
         var todosProdutos = new List<ProdutoInvestimento>
         {
             new ProdutoInvestimento { PerfilRecomendado = "Conservador" },
@@ -210,7 +171,7 @@ public class RecomendacaoServiceTests
             .Setup(repo => repo.GetAllAsync())
             .ReturnsAsync(todosProdutos);
 
-        // Act & Assert
+       
         var exception = await Assert.ThrowsAsync<NotFoundException>(() => _service.GetProdutosRecomendados(perfil));
         Assert.Contains("Nenhum produto encontrado", exception.Message);
 
@@ -224,7 +185,7 @@ public class RecomendacaoServiceTests
     [InlineData("Agressivo", "Agressivo")]
     public async Task GetProdutosRecomendados_WithDifferentCases_ShouldNormalizePerfil(string perfilInput, string perfilNormalizado)
     {
-        // Arrange
+       
         var produtos = new List<ProdutoInvestimento>
     {
         new ProdutoInvestimento
@@ -238,12 +199,11 @@ public class RecomendacaoServiceTests
         }
     };
 
-        // Setup para GetProdutosPorPerfilAsync - retorna produtos
+      
         _mockProdutoRepository
             .Setup(repo => repo.GetProdutosPorPerfilAsync(perfilNormalizado))
             .ReturnsAsync(produtos);
 
-        // Setup para GetAllAsync (usado no GetPerfisDisponiveis) - retorna lista com perfis
         var todosProdutos = new List<ProdutoInvestimento>
     {
         new ProdutoInvestimento { PerfilRecomendado = "Conservador" },
@@ -255,10 +215,10 @@ public class RecomendacaoServiceTests
             .Setup(repo => repo.GetAllAsync())
             .ReturnsAsync(todosProdutos);
 
-        // Act
+        
         var resultado = await _service.GetProdutosRecomendados(perfilInput);
 
-        // Assert
+       
         Assert.Single(resultado);
         Assert.Equal($"Produto {perfilNormalizado}", resultado[0].Nome);
 
@@ -268,7 +228,7 @@ public class RecomendacaoServiceTests
     [Fact]
     public async Task CalcularPerfilRisco_WithHighVolumeAndFrequency_ShouldReturnAgressivo()
     {
-        // Arrange
+       
         var clienteId = 1;
         var historico = new List<HistoricoInvestimento>
         {
@@ -338,10 +298,10 @@ public class RecomendacaoServiceTests
             .Setup(repo => repo.GetByClienteIdAsync(clienteId))
             .ReturnsAsync(historico);
 
-        // Act
+        
         var resultado = await _service.CalcularPerfilRisco(clienteId);
 
-        // Assert
+       
         Assert.Equal("Agressivo", resultado.Perfil);
         Assert.True(resultado.Pontuacao >= 70);
     }
@@ -349,7 +309,7 @@ public class RecomendacaoServiceTests
     [Fact]
     public async Task CalcularPerfilRisco_WithLowVolumeAndFrequency_ShouldReturnConservador()
     {
-        // Arrange
+        
         var clienteId = 1;
         var historico = new List<HistoricoInvestimento>
         {
@@ -369,10 +329,10 @@ public class RecomendacaoServiceTests
             .Setup(repo => repo.GetByClienteIdAsync(clienteId))
             .ReturnsAsync(historico);
 
-        // Act
+      
         var resultado = await _service.CalcularPerfilRisco(clienteId);
 
-        // Assert
+       
         Assert.Equal("Conservador", resultado.Perfil);
         Assert.True(resultado.Pontuacao < 30);
     }
@@ -380,14 +340,14 @@ public class RecomendacaoServiceTests
     [Fact]
     public async Task CalcularPerfilRisco_WithRepositoryException_ShouldThrowBusinessException()
     {
-        // Arrange
+       
         var clienteId = 1;
 
         _mockHistoricoRepository
             .Setup(repo => repo.GetByClienteIdAsync(clienteId))
             .ThrowsAsync(new Exception("Erro de banco de dados"));
 
-        // Act & Assert
+     
         var exception = await Assert.ThrowsAsync<BusinessException>(() => _service.CalcularPerfilRisco(clienteId));
         Assert.Contains("Erro ao calcular perfil", exception.Message);
         Assert.Contains(clienteId.ToString(), exception.Message);

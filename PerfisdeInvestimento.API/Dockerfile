@@ -14,6 +14,17 @@ RUN dotnet publish "PerfisdeInvestimento.API.csproj" -c Release -o /app/publish 
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends locales locales-all && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV LANG=pt_BR.UTF-8
+ENV LANGUAGE=pt_BR:pt
+ENV LC_ALL=pt_BR.UTF-8
+
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+
 RUN mkdir -p Data
 EXPOSE 8080
 COPY --from=publish /app/publish .
