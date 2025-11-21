@@ -27,4 +27,8 @@
 		<ProjectReference Include="..\PerfisdeInvestimento.Infrastructure\PerfisdeInvestimento.Infrastructure.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Data\" />
+	</ItemGroup>
+
 </Project>
